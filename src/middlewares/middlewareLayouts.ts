@@ -9,7 +9,7 @@ export async function middlewareLayout(to: RouteLocationNormalized, from: RouteL
   const layout = to.meta.layout as string
 
   if (isAuthenticated && layout === 'auth') {
-    return next('/')
+    return next('/home')
   }
 
   if (!isAuthenticated && !['error', 'auth'].includes(layout)) {

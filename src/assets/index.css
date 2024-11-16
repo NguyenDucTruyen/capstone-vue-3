@@ -242,34 +242,35 @@ html, body {
   }
    
   .orange.dark {
-    --background:20 14.3% 4.1%;
-    --foreground:60 9.1% 97.8%;
-  
-    --card:20 14.3% 4.1%;
-    --card-foreground:60 9.1% 97.8%;
-  
-    --popover:20 14.3% 4.1%;
-    --popover-foreground:60 9.1% 97.8%;
-  
-    --primary:20.5 90.2% 48.2%;
-    --primary-foreground:60 9.1% 97.8%;
-  
-    --secondary:12 6.5% 15.1%;
-    --secondary-foreground:60 9.1% 97.8%;
-  
-    --muted:12 6.5% 15.1%;
-    --muted-foreground:24 5.4% 63.9%;
-  
-    --accent:12 6.5% 15.1%;
-    --accent-foreground:60 9.1% 97.8%;
-  
-    --destructive:0 72.2% 50.6%;
-    --destructive-foreground:60 9.1% 97.8%;
-  
-    --border:12 6.5% 15.1%;
-    --input:12 6.5% 15.1%;
-    --ring:20.5 90.2% 48.2%;
-  }
+  --background: 20 14% 5%;
+  --foreground: 60 9% 98%;
+
+  --card: 20 14% 6%;
+  --card-foreground: 60 9% 98%;
+
+  --popover: 25 10% 8%;
+  --popover-foreground: 60 9% 98%;
+
+  --primary:20.5 90.2% 48.2%;
+  --primary-foreground:60 9.1% 97.8%;
+
+  --secondary: 18 8% 18%;
+  --secondary-foreground: 60 9% 98%;
+
+  --muted: 15 7% 20%;
+  --muted-foreground: 30 6% 65%;
+
+  --accent: 30 10% 25%;
+  --accent-foreground: 60 9% 98%;
+
+  --destructive: 0 75% 55%;
+  --destructive-foreground: 60 9% 98%;
+
+  --border: 15 7% 20%;
+  --input: 18 8% 18%;
+  --ring:20.5 90.2% 48.2%;
+}
+
 
   .blue{
     --background: 0 0% 100%;

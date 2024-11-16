@@ -16,3 +16,15 @@ export interface ResetPasswordData {
   confirmPassword: string
   token: string
 }
+
+export interface UserData {
+  _id: string
+  firstName: string
+  lastName: string
+  email: string
+  isActive: string
+  roleName: string
+  createdAt: string
+  updatedAt: string
+
+}

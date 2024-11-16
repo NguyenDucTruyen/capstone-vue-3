@@ -16,13 +16,13 @@ const colors = ref<ColorsType[]>(['rose', 'blue', 'green', 'orange', 'zinc'],
   <DropdownMenu>
     <DropdownMenuTrigger as-child>
       <Button variant="outline">
-        {{ themeStore.color }}
+        {{ themeStore.color.toLocaleUpperCase() }}
       </Button>
     </DropdownMenuTrigger>
     <DropdownMenuContent align="end">
       <template v-for="(color, index) in colors" :key="index">
         <DropdownMenuItem @click="setColor(color)">
-          {{ color }}
+          {{ color.toLocaleUpperCase() }}
         </DropdownMenuItem>
       </template>
     </DropdownMenuContent>

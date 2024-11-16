@@ -18,8 +18,8 @@ function handleChange(value) {
       <Button variant="ghost" class="relative lg:px-6 py-6 lg:w-60">
         <Avatar class="h-8 w-8 rounded-lg">
           <AvatarImage :src="userStore.user.avatar" :alt="userStore.user.name" />
-          <AvatarFallback class="rounded-lg">
-            CN
+          <AvatarFallback class="rounded-lg p-1">
+            <img src="https://static.vecteezy.com/system/resources/thumbnails/024/983/914/small_2x/simple-user-default-icon-free-png.png">
           </AvatarFallback>
         </Avatar>
         <div class="max-lg:hidden  grid flex-1 text-left text-sm leading-tight">
@@ -32,7 +32,7 @@ function handleChange(value) {
     <DropdownMenuContent class="w-52 rounded-lg" side="bottom" align="end" :side-offset="4">
       <DropdownMenuItem>
         <div class="flex justify-between item-centers w-full">
-          <span>Dark mode</span><Switch :checked="isDarkMode" @update:checked="handleChange" />
+          <span>Dark mode</span><Switch :checked="themeStore.theme === 'dark'" @update:checked="handleChange" />
         </div>
       </DropdownMenuItem>
       <DropdownMenuSeparator />
