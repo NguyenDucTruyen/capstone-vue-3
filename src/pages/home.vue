@@ -152,64 +152,61 @@ const data = ref<BlogData[]>([
     createdAt: '2024-11-16T05:00:00.000Z',
     updatedAt: '2024-11-16T06:00:00.000Z',
   },
-]);
-
+])
 </script>
 
 <template>
   <div class="flex flex-col p-6 bg-muted rounded-lg flex-1">
-    <ScrollArea class="pr-8">
-      <div
-        v-for="blog in data"
-        :key="blog._id"
-        class="blog w-full"
-      >
-        <BlogCard
-          :image-link="blog.blogImage ?? null"
-          :author="`${blog.userId?.firstName ?? ''} ${
-            blog.userId?.lastName ?? ''
-          }`"
-          :like="
-            blog.reaction?.filter((e) => {
-              return e.reaction === 'like'
-            }).length
-          "
-          :dislike="
-            blog.reaction?.filter((e) => {
-              return e.reaction === 'dislike'
-            }).length
-          "
-          :title="blog.title"
-          :time="blog.createdAt"
-          :category="blog.category?.name ?? ''"
-        />
-      </div>
-      <div
-        v-for="blog in data"
-        :key="blog._id"
-        class="blog w-full"
-      >
-        <BlogCard
-          :image-link="blog.blogImage ?? null"
-          :author="`${blog.userId?.firstName ?? ''} ${
-            blog.userId?.lastName ?? ''
-          }`"
-          :like="
-            blog.reaction?.filter((e) => {
-              return e.reaction === 'like'
-            }).length
-          "
-          :dislike="
-            blog.reaction?.filter((e) => {
-              return e.reaction === 'dislike'
-            }).length
-          "
-          :title="blog.title"
-          :time="blog.createdAt"
-          :category="blog.category?.name ?? ''"
-        />
-      </div>
-
-    </ScrollArea>
+    <div
+      v-for="blog in data"
+      :key="blog._id"
+      class="blog w-full"
+    >
+      <BlogCard
+        :image-link="blog.blogImage ?? null"
+        :author="`${blog.userId?.firstName ?? ''} ${
+          blog.userId?.lastName ?? ''
+        }`"
+        :like="
+          blog.reaction?.filter((e) => {
+            return e.reaction === 'like'
+          }).length
+        "
+        :dislike="
+          blog.reaction?.filter((e) => {
+            return e.reaction === 'dislike'
+          }).length
+        "
+        :title="blog.title"
+        :time="blog.createdAt"
+        :category="blog.category?.name ?? ''"
+      />
+    </div>
+    <div
+      v-for="blog in data"
+      :key="blog._id"
+      class="blog w-full"
+    >
+      <BlogCard
+        :image-link="blog.blogImage ?? null"
+        :author="`${blog.userId?.firstName ?? ''} ${
+          blog.userId?.lastName ?? ''
+        }`"
+        :like="
+          blog.reaction?.filter((e) => {
+            return e.reaction === 'like'
+          }).length
+        "
+        :dislike="
+          blog.reaction?.filter((e) => {
+            return e.reaction === 'dislike'
+          }).length
+        "
+        :title="blog.title"
+        :time="blog.createdAt"
+        :category="blog.category?.name ?? ''"
+      />
+    </div>
+    <PaginationTable :total="90" :current-page="2"/>
   </div>
 </template>
