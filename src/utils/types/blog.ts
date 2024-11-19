@@ -23,3 +23,16 @@ export interface BlogData {
   createdAt: string
   updatedAt: string
 }
+
+export interface ResponseBlogData {
+  docs: BlogData[]
+  hasNextPage: boolean
+  hasPrevPage: boolean
+  limit: number
+  nextPage: number | null
+  page: number
+  pagingCounter: number
+  prevPage: number | null
+  totalDocs: number
+  totalPages: number
+}

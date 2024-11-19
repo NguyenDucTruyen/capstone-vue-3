@@ -6,11 +6,9 @@ useThemeStore()
 
 <template>
   <router-view v-slot="{ Component }">
-    <transition name="slide">
-      <ErrorBoundary>
-        <component :is="Component" />
-      </ErrorBoundary>
-    </transition>
+    <ErrorBoundary>
+      <component :is="Component" />
+    </ErrorBoundary>
   </router-view>
   <Toaster />
 </template>

@@ -54,11 +54,18 @@ onMounted(() => {
                 <Button>Create blog</Button>
               </div>
             </div>
-            <router-view />
+            <Suspense>
+              <router-view />
+              <template #fallback>
+                <div class="flex w-full p-8 justify-center items-center">
+                  <Icon name="IconLoading" />
+                </div>
+              </template>
+            </Suspense>
           </div>
           <TabRight class="max-lg:hidden" />
         </div>
-        <AppFooter/>
+        <AppFooter />
       </ScrollArea>
     </div>
   </div>

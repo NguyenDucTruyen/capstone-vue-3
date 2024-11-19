@@ -17,7 +17,7 @@ function handleChange(value) {
     <DropdownMenuTrigger as-child>
       <Button variant="ghost" class="relative lg:px-6 py-6 lg:w-60">
         <Avatar class="h-8 w-8 rounded-lg">
-          <AvatarImage :src="userStore.user.avatar" :alt="userStore.user.name" />
+          <AvatarImage v-if="userStore.user?.avatar" :src="userStore.user?.avatar" :alt="userStore.user.name" />
           <AvatarFallback class="rounded-lg p-1">
             <img src="https://static.vecteezy.com/system/resources/thumbnails/024/983/914/small_2x/simple-user-default-icon-free-png.png">
           </AvatarFallback>

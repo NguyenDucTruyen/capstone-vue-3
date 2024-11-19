@@ -18,19 +18,16 @@ import { ref, watch } from 'vue'
 interface Props {
   total: number
   currentPage: number
+  itemsPerPage: number
 }
 const props = defineProps<Props>()
-
+const router = useRouter()
 const currentPage = ref(props.currentPage)
 
 function handlePageChange(newPage: number) {
   currentPage.value = newPage
-  console.log('Navigated to page:', newPage)
+  router.push({ query: { page: newPage } })
 }
-
-watch(currentPage, (newVal) => {
-  console.log('Current page updated:', newVal)
-})
 </script>
 
 <template>
@@ -38,6 +35,7 @@ watch(currentPage, (newVal) => {
     v-slot="{ page }"
     :total="props.total"
     :sibling-count="1"
+    :items-per-page="props.itemsPerPage"
     show-edges
     :default-page="props.currentPage"
     @update:page="handlePageChange"

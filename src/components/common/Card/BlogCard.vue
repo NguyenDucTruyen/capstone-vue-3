@@ -3,11 +3,9 @@ const props = defineProps<{
   imageLink: string[]
   title: string
   author: string
-  tags: string[]
   time: string
   like: number
   dislike: number
-  comments: number
   category: string
 }>()
 
