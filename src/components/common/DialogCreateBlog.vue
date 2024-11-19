@@ -18,10 +18,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import { useCategoryStore } from '@/stores/category'
 import { toTypedSchema } from '@vee-validate/zod'
 import { useForm } from 'vee-validate'
 import { z } from 'zod'
 
+const categoryStore = useCategoryStore()
 const titleSchema = z.string().min(2).max(50)
 const form = useForm({
   validationSchema: toTypedSchema(z.object({ title: titleSchema })),
@@ -60,26 +62,17 @@ const onSubmit = form.handleSubmit(async (values) => {
             autocomplete="off"
           />
           <Select>
-            <SelectTrigger class="w-[180px]">
+            <SelectTrigger class="w-full">
               <SelectValue placeholder="Select a fruit" />
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
-                <SelectLabel>Fruits</SelectLabel>
-                <SelectItem value="apple">
-                  Apple
-                </SelectItem>
-                <SelectItem value="banana">
-                  Banana
-                </SelectItem>
-                <SelectItem value="blueberry">
-                  Blueberry
-                </SelectItem>
-                <SelectItem value="grapes">
-                  Grapes
-                </SelectItem>
-                <SelectItem value="pineapple">
-                  Pineapple
+                <SelectItem
+                  v-for="category in categoryStore.categories"
+                  :key="category._id"
+                  :value="category._id"
+                >
+                  {{ category.name }}
                 </SelectItem>
               </SelectGroup>
             </SelectContent>

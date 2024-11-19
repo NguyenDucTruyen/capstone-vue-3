@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import type { Category } from '@/utils/types'
 import { useCategoryStore } from '@/stores/category'
 
 const categoryStore = useCategoryStore()
-await categoryStore.fetchCategories()
+onMounted(async () => {
+  await categoryStore.fetchCategories()
+})
 </script>
 
 <template>
@@ -14,20 +15,22 @@ await categoryStore.fetchCategories()
       </h2>
       <Separator class="w-full bg-muted-foreground" />
       <ScrollArea class="max-h-[420px] w-full overflow-auto custom-scroll mb-5 pr-4">
-        <div
-          v-for="item in categoryStore.categories"
-          :key="item._id"
-          class="flex items-start gap-2 w-full rounded cursor-pointer hover:bg-secondary mb-3 p-2"
-        >
-          <Icon
-            name="IconTag"
-            class="object-contain h-8 w-8 flex justify-center items-center"
-          />
-          <div class="flex flex-col w-[calc(100%-2.5rem)] items-start gap-0.5">
-            <span class="text-foreground font-medium text-sm leading-4">{{ item.name }}</span>
-            <span class="text-foreground truncate font-normal w-full text-xs leading-[1.4]">{{ item.description }}</span>
+        <template v-if="categoryStore.categories">
+          <div
+            v-for="item in categoryStore.categories"
+            :key="item._id"
+            class="flex items-start gap-2 w-full rounded cursor-pointer hover:bg-secondary mb-3 p-2"
+          >
+            <Icon
+              name="IconTag"
+              class="object-contain h-8 w-8 flex justify-center items-center"
+            />
+            <div class="flex flex-col w-[calc(100%-2.5rem)] items-start gap-0.5">
+              <span class="text-foreground font-medium text-sm leading-4">{{ item.name }}</span>
+              <span class="text-foreground truncate font-normal w-full text-xs leading-[1.4]">{{ item.description }}</span>
+            </div>
           </div>
-        </div>
+        </template>
       </ScrollArea>
     </div>
   </div>
