@@ -1,7 +1,7 @@
 import { z } from 'zod'
 
+// Schemas
 export const emailSchema = z.string().email()
-
 export const passwordSchema = z
   .string()
   .min(8, { message: 'Password must be at least 8 characters long' })
@@ -24,6 +24,7 @@ export const signupValidator = z
     path: ['confirmPassword'],
   })
 
+// Validator
 export const emailValidator = z.object({
   email: emailSchema,
 })
@@ -43,3 +44,4 @@ export const resetPasswordValidator = z
     message: 'Password confirmation does not match',
     path: ['confirmPassword'],
   })
+

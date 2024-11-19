@@ -32,7 +32,7 @@ onMounted(() => {
               <h2 class="text-2xl font-bold mb-4">
                 Well come
               </h2>
-              <div class="relative w-full flex justify-between items-center">
+              <div class="relative w-full flex justify-between items-center gap-4">
                 <div class="relative w-full max-w-sm items-center">
                   <input
                     id="search"
@@ -51,7 +51,9 @@ onMounted(() => {
                     <Icon name="IconSearch" class="w-4" />
                   </span>
                 </div>
-                <Button>Create blog</Button>
+                <DialogCreateBlog>
+                  <Button>Create blog</Button>
+                </DialogCreateBlog>
               </div>
             </div>
             <Suspense>

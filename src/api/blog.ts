@@ -1,14 +1,8 @@
 import { sleep } from '@/utils/common'
-/**
- * Fetches a list of blogs from the server.
- *
- * @param {any} config - The configuration object for the request.
- * @returns {Promise<any>} - A promise that resolves to the response of the GET request.
- */
 import { $get } from './axios'
 
 export async function apiGetBlogs(config: any) {
-  await sleep(3000)
+  // await sleep(3000)
   return $get('/blogs', config)
 }
 

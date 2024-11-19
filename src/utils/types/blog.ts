@@ -7,6 +7,7 @@ export interface Category {
   slug: string
   createdAt: string
   updatedAt: string
+  description: string
 }
 
 export interface BlogData {

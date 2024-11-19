@@ -13,7 +13,6 @@ import { loginValidator } from '@/utils/validation'
 import { toTypedSchema } from '@vee-validate/zod'
 import { useForm } from 'vee-validate'
 import { RouterLink } from 'vue-router'
-import z from 'zod'
 
 const authStore = useAuthStore()
 
