@@ -24,7 +24,7 @@ const formattedTime = computed(() => props.time.split('T')[0])
 <template>
   <div class="flex bg-card text-foreground gap-5 w-full p-5 mb-5 rounded-lg cursor-pointer shadow-lg">
     <img
-      :src="imageLink[0] ?? 'https://sgroupvn.org/_nuxt/img/logo-sgroup-symbol.ae66e60.png'"
+      v-lazy="imageLink[0]"
       alt=""
       class="w-20 h-20 rounded-lg"
     >

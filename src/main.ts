@@ -1,6 +1,7 @@
 import { QuillEditor } from '@vueup/vue-quill'
 import { createPinia } from 'pinia'
 import { createApp } from 'vue'
+import VueLazyload from 'vue-lazyload'
 import App from './App.vue'
 import router from './router'
 import '@vueup/vue-quill/dist/vue-quill.snow.css'
@@ -13,6 +14,7 @@ const app = createApp(App)
 app
   .use(createPinia())
   .use(router)
+  .use(VueLazyload)
 
 app.component('QuillEditor', QuillEditor)
 
