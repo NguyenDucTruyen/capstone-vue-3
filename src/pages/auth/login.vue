@@ -38,7 +38,7 @@ const onSubmit = form.handleSubmit(async (values) => {
       </CardHeader>
       <CardContent>
         <div class="grid gap-4">
-          <div class="grid gap-2">
+          <div class="grid">
             <InputValidator id="email" type="email" label="Email" placeholder="m@gmai.com" name="email" />
             <div class="grid gap-2">
               <InputValidator id="password" type="password" placeholder="Password" label="Password" name="password" />

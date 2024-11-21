@@ -42,7 +42,7 @@ const onSubmit = form.handleSubmit(async (values) => {
       </CardDescription>
     </CardHeader>
     <CardContent>
-      <div class="grid gap-4">
+      <div class="">
         <InputValidator
           id="token"
           type="text"

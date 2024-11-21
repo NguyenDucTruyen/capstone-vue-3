@@ -1,15 +1,54 @@
+<!-- eslint-disable prefer-promise-reject-errors -->
 <script setup lang="ts">
-const content = defineModel()
+import { toast } from '@/components/ui/toast'
+import BlotFormatter from 'quill-blot-formatter'
+import ImageUploader from 'quill-image-uploader'
+
+interface Emit {
+  (event: 'updateContent', value: string): void
+}
+const emit = defineEmits<Emit>()
+const modules = [{
+  name: 'blotFormatter',
+  module: BlotFormatter,
+  options: {},
+}, {
+  name: 'imageUploader',
+  module: ImageUploader,
+  options: { upload: (file: File) => {
+    return new Promise((resolve, reject) => {
+      if (!file.type.startsWith('image/')) {
+        toast({
+          title: 'Error',
+          description: 'Only image files are allowed.',
+          variant: 'destructive',
+        })
+        reject('Only image files are allowed.')
+      }
+      setTimeout(() => {
+        resolve(
+          'https://res.cloudinary.com/dzdfgj03g/image/upload/v1722616626/aujgjs8iixjqmv1trbkl.jpg',
+        )
+      }, 2000)
+    })
+  },
+  },
+}]
+const content = ref<string>('')
 const quill = ref(null)
 const focus = ref(false)
 const toolbar = [
   [{ header: [false, 1, 2, 3, 4, 5, 6] }],
   ['bold', 'italic', 'strike'],
+  [{ align: [] }],
   [{ list: 'ordered' }, { list: 'bullet' }],
   ['blockquote', 'code-block'],
   ['link', 'image'],
   ['clean'],
 ]
+watch(content, (value) => {
+  emit('updateContent', value)
+})
 </script>
 
 <template>
@@ -18,9 +57,10 @@ const toolbar = [
       <div class="editor-container" :class="{ focus }">
         <quill-editor
           ref="quill"
-          v-model:content="content"
           content-type="html"
           :toolbar="toolbar"
+          :modules="modules"
+          @update:content="content = $event"
         />
       </div>
     </div>
@@ -28,48 +68,11 @@ const toolbar = [
 </template>
 
 <style scoped>
-.data-description-title-button {
-  background-color: var(--ds-background-neutral, #091e420f);
-  border: none;
-  border-radius: 3px;
-  color: var(--ds-text, #172b4d);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  font-weight: 500;
-  max-width: 200px;
-  height: 32px;
-  overflow: hidden;
-  padding: 6px 12px;
-  position: relative;
-  text-decoration: none;
-  text-overflow: ellipsis;
-}
-.data-description-title-button:hover {
-  background-color: #091e4224;
-}
-.preview-description-placeholder {
-  color: #172b4d;
-  font-weight: 600;
-  background-color: #091e420f;
-  padding: 8px 12px;
-  border-radius: 4px;
-  cursor: pointer;
-  height: 56px;
-}
-.preview-description-placeholder:hover {
-  background-color: #091e4224;
-}
-
-.editor-footer {
-  margin-top: 8px;
-}
 .preview-description {
   cursor: pointer;
 }
 .editor-container {
   border-radius: 4px;
-  background-color: #fff;
   box-shadow: 0 0 0 1px #dbdbdb;
   min-height: 200px;
 }
@@ -84,18 +87,29 @@ const toolbar = [
 .ql-editor.content {
   padding: 0;
 }
-:deep(.ql-container) {
-  font-size: 14px;
-  line-height: 20px;
-}
-:deep(.ql-toolbar) {
-  border: none;
-  border-bottom: 2px solid #dfdfdf;
-}
-:deep(.ql-container.ql-snow) {
-  border: none;
-}
-:deep(.ql-container.ql-snow .ql-editor) {
-  min-height: 100px;
+
+:deep() {
+  .ql-snow.ql-toolbar button,
+  .ql-toolbar.ql-snow .ql-picker-label {
+    @apply rounded-sm;
+  }
+  .ql-snow.ql-toolbar button.ql-active {
+    color: #333 !important;
+    background-color: #e9ecf1;
+  }
+  .ql-container {
+    font-size: 14px;
+    line-height: 20px;
+  }
+  .ql-toolbar {
+    border: none;
+    border-bottom: 2px solid #dfdfdf;
+  }
+  .ql-container.ql-snow {
+    border: none;
+  }
+  .ql-container.ql-snow .ql-editor {
+    min-height: 100px;
+  }
 }
 </style>

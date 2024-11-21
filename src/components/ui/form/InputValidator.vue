@@ -25,9 +25,9 @@ const typeInputComputed = computed(() => {
 
 <template>
   <FormField v-slot="{ componentField }" :name="props.name" :validate-on-blur="false">
-    <div class="space-y-2">
+    <div class="space-y-2 h-24 relative">
       <Label :for="props.id">{{ props.label }}</Label>
-      <FormItem class="relative">
+      <FormItem>
         <FormControl>
           <Input
             :id="props.id"
@@ -45,7 +45,7 @@ const typeInputComputed = computed(() => {
             <Icon v-if="!isShowPassword" name="IconEyeOff" class="w-6 h-6" />
             <Icon v-else name="IconEyeOn" class="w-6 h-6" />
           </div>
-          <FormMessage class="error-message" />
+          <FormMessage class="error-message absolute bottom-0" />
         </FormControl>
       </FormItem>
     </div>

@@ -5,6 +5,7 @@ import App from './App.vue'
 import router from './router'
 import '@vueup/vue-quill/dist/vue-quill.snow.css'
 import './assets/index.css'
+import './assets/custom/quill.css'
 import './utils/zodLocale'
 
 const app = createApp(App)

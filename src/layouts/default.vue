@@ -51,9 +51,9 @@ onMounted(() => {
                     <Icon name="IconSearch" class="w-4" />
                   </span>
                 </div>
-                <DialogCreateBlog>
+                <RouterLink to="/blogs/create">
                   <Button>Create blog</Button>
-                </DialogCreateBlog>
+                </RouterLink>
               </div>
             </div>
             <Suspense>

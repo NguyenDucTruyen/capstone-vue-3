@@ -22,9 +22,8 @@ router.beforeEach(middlewareAuth)
 router.beforeEach(middlewareLayout)
 
 router.beforeEach((to, from, next) => {
-  if (to.meta.title) {
-    document.title = to.meta.title as string
-  }
+  const title = to.meta.title
+  document.title = `S-Forum ${title ? `| ${title}` : ''}`
   next()
 })
 

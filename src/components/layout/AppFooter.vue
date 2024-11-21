@@ -26,18 +26,18 @@ export default defineComponent({
 
             </div>
           </a>
-          <h3 class="uppercase text-center text-[#FF571A]">
+          <h3 class="uppercase text-center text-primary">
             Sgroup
           </h3>
-          <h3 class="uppercase text-center text-[#FF571A]">
+          <h3 class="uppercase text-center text-primary">
             Think different - Make different
           </h3>
         </div>
         <div class="space-y-3">
-          <h3 class="uppercase text-[#F4F6F8]">
+          <h3 class="uppercase text-foreground">
             Specialization
           </h3>
-          <ul class="space-y-1 text-[#F4F6F8]">
+          <ul class="space-y-1 text-foreground">
             <li class="py-[4px]">
               <a rel="noopener noreferrer" href="#">Programming </a>
             </li>
@@ -50,10 +50,10 @@ export default defineComponent({
           </ul>
         </div>
         <div class="space-y-3">
-          <h3 class="uppercase text-[#F4F6F8]">
+          <h3 class="uppercase text-foreground">
             Social Media
           </h3>
-          <ul class="space-y-1 text-[#F4F6F8]">
+          <ul class="space-y-1 text-foreground">
             <li>
               <a
                 rel="noopener noreferrer"
@@ -106,7 +106,7 @@ export default defineComponent({
         </div>
       </div>
     </div>
-    <div class="py-6 text-sm text-center text-[#f4f6f8]">
+    <div class="py-6 text-sm text-center text-foreground">
       © 2024 S-Forum. All rights reserved.
     </div>
   </div>

@@ -6,10 +6,10 @@ export const passwordSchema = z
   .string()
   .min(8, { message: 'Password must be at least 8 characters long' })
   .max(32, { message: 'Password must not exceed 32 characters' })
-  .refine(value => /[a-z]/.test(value), { message: 'Password must include at least one lowercase letter' })
-  .refine(value => /[A-Z]/.test(value), { message: 'Password must include at least one uppercase letter' })
+  .refine(value => /[a-z]/.test(value), { message: 'Password must include lowercase letter' })
+  .refine(value => /[A-Z]/.test(value), { message: 'Password must include uppercase letter' })
   .refine(value => /\d/.test(value), { message: 'Password must include at least one number' })
-  .refine(value => /[@$!%*?&]/.test(value), { message: 'Password must include at least one special character (@$!%*?&)' })
+  .refine(value => /[@$!%*?&]/.test(value), { message: 'Password must include at least one special character' })
 
 export const requiredStringSchema = z.string()
 
