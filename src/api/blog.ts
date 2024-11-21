@@ -1,9 +1,11 @@
-import { sleep } from '@/utils/common'
-import { $get } from './axios'
+import type { RequestCreateBlog, ResponseBlogData } from '@/utils/types/blog'
+import { $get, $post } from './axios'
 
-export async function apiGetBlogs(config: any) {
-  // await sleep(3000)
+export async function apiGetBlogs(config: any): Promise<ResponseBlogData[]> {
   return $get('/blogs', config)
+}
+export async function apiCreateBlog(data: RequestCreateBlog): Promise<ResponseBlogData>  {
+  return $post('/blogs', data)
 }
 
 // Fake data:

@@ -9,6 +9,8 @@
   </route>
 
 <script setup lang="ts">
+import type { RequestCreateBlog, ResponseBlogData } from '@/utils/types/blog'
+import { uploadImage } from '@/api/upload'
 import {
   Select,
   SelectContent,
@@ -19,6 +21,7 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { toast } from '@/components/ui/toast'
+import { useBlogStore } from '@/stores/blog'
 import { useCategoryStore } from '@/stores/category'
 import { toTypedSchema } from '@vee-validate/zod'
 import { BookText, CloudUpload, X } from 'lucide-vue-next'
@@ -26,6 +29,7 @@ import { useForm } from 'vee-validate'
 import { z } from 'zod'
 
 const categoryStore = useCategoryStore()
+const blogStore = useBlogStore()
 onMounted(async () => {
   await categoryStore.fetchCategories()
 })
@@ -34,7 +38,7 @@ const fileInput = useTemplateRef('refInput')
 
 const file = ref<File | null>(null)
 const previewImage = ref<string | null>(null)
-const titleSchema = z.string().min(2).max(50)
+const titleSchema = z.string().min(2).max(255)
 const content = ref<string>('')
 const categoryId = ref<string>('')
 const form = useForm({
@@ -45,9 +49,19 @@ const onSubmit = form.handleSubmit(async (values) => {
   if (!file.value) {
     return
   }
-  console.log(values.title, categoryId.value, content.value)
-  // const response = await uploadImage(file.value as File)
-  // console.log(response)
+  const response = await uploadImage(file.value as File)
+  const body = {
+    title: values.title,
+    category: categoryId.value,
+    content: content.value,
+    blogImages: [response.url],
+  }
+  await blogStore.createBlog(body)
+  toast({
+    title: 'Success',
+    description: 'Blog created successfully',
+  })
+  form.resetForm()
 })
 
 function handleUploadImage(e: Event) {
@@ -138,7 +152,7 @@ function updateContent(newContent: string) {
       Expand on what you put in the title. Minimum 20 characters.
     </p>
     <ContentEditor @update-content="updateContent" />
-    <section class="mt-8">
+    <!-- <section class="mt-8">
       <Label class="text-lg">Preview</Label>
       <p class="flex mb-4 font-normal">
         This section provides a preview of your blog content. Ensure it meets the minimum requirement of 20 characters.
@@ -146,7 +160,7 @@ function updateContent(newContent: string) {
       <div class="ql-snow content">
         <div class="ql-editor" v-html="content" />
       </div>
-    </section>
+    </section> -->
     <Button variant="secondary">
       <RouterLink to="/home">
         Cancel

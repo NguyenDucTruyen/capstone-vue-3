@@ -17,7 +17,7 @@ const userStore = useUserStore()
     <div class="flex gap-2">
       <Navigator to="/home?page=1" icon="IconHome" />
     </div>
-    <div class="flex">
+    <div class="flex">      
       <UserDropdown v-if="userStore?.user" />
       <template v-else>
         <router-link to="/auth/register">

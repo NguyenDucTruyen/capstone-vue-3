@@ -1,6 +1,8 @@
 <!-- eslint-disable prefer-promise-reject-errors -->
 <script setup lang="ts">
+import { uploadImage } from '@/api/upload'
 import { toast } from '@/components/ui/toast'
+import { sleep } from '@/utils/common'
 import BlotFormatter from 'quill-blot-formatter'
 import ImageUploader from 'quill-image-uploader'
 
@@ -15,22 +17,17 @@ const modules = [{
 }, {
   name: 'imageUploader',
   module: ImageUploader,
-  options: { upload: (file: File) => {
-    return new Promise((resolve, reject) => {
-      if (!file.type.startsWith('image/')) {
-        toast({
-          title: 'Error',
-          description: 'Only image files are allowed.',
-          variant: 'destructive',
-        })
-        reject('Only image files are allowed.')
-      }
-      setTimeout(() => {
-        resolve(
-          'https://res.cloudinary.com/dzdfgj03g/image/upload/v1722616626/aujgjs8iixjqmv1trbkl.jpg',
-        )
-      }, 2000)
-    })
+  options: { upload: async (file: File) => {
+    if (!file.type.startsWith('image/')) {
+      toast({
+        title: 'Error',
+        description: 'Only image files are allowed.',
+        variant: 'destructive',
+      })
+      return Promise.reject('Only image files are allowed.')
+    }
+    const response = await uploadImage(file)
+    return Promise.resolve(response.url)
   },
   },
 }]
