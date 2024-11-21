@@ -44,4 +44,3 @@ export const resetPasswordValidator = z
     message: 'Password confirmation does not match',
     path: ['confirmPassword'],
   })
-
