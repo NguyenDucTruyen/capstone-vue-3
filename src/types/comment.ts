@@ -1,6 +1,11 @@
 export interface CommentReply {
   userId: {
     _id: string
+    email: string
+    profileImage?: string
+    firstName?: string
+    lastName?: string
+    createdAt?: string
   }
   content: string
   _id: string

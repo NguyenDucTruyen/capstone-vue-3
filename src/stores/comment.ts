@@ -13,8 +13,8 @@ export const useCommentStore = defineStore('comment', () => {
   function updateCommentById(id: string, data: RequestBodyComment) {
     return apiUpdateCommentById(id, data)
   }
-  function createReplyComment(id: string, data: CommentReply) {
-    return apiCreateReplyComment(id, data)
+  function createReplyComment(idComment: string, data: RequestBodyComment) {
+    return apiCreateReplyComment(idComment, data)
   }
   function deleteCommentById(id: string) {
     return apiDeleteCommentById(id)

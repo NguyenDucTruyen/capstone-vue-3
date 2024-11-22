@@ -10,6 +10,7 @@ import ImageUploader from 'quill-image-uploader'
 interface Emit {
   (event: 'updateComment', data: CommentData): void
   (event: 'comment', title: string): void
+  (event: 'changeStatusReply', status: boolean): void
 }
 
 interface Props {
@@ -27,7 +28,7 @@ const title = ref('')
 const quill = ref(null)
 const focus = ref(false)
 const enableSave = ref(false)
-
+const isReply = ref(false)
 const toolbar = [
   [{ header: [false, 1, 2, 3, 4, 5, 6] }],
   ['bold', 'italic', 'strike'],
@@ -105,6 +106,10 @@ function getDate(date: string) {
   const times = date.split('T')[1].split(':')
   return `${dmy}, ${times[0]}:${times[1]}`
 }
+function emitReply() {
+  isReply.value = !isReply.value
+  emit('changeStatusReply', isReply.value)
+}
 </script>
 
 <template>
@@ -137,8 +142,8 @@ function getDate(date: string) {
               >
                 Edit
               </Button>
-              <Button variant="link" type="info" class="file-action relative">
-                Write a reply
+              <Button variant="link" type="info" class="file-action relative" @click="emitReply">
+                {{ isReply ? 'Cancel reply' : 'Write a reply' }}
               </Button>
             </template>
           </div>

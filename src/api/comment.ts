@@ -13,8 +13,8 @@ export async function apiUpdateCommentById(id: string, data: RequestBodyComment)
   return $patch(`/blog/comments/${id}`, data)
 }
 
-export async function apiCreateReplyComment(id: string, data: CommentReply): Promise<CommentData> {
-  return $post(`/blog/comments/${id}/reply`, data)
+export async function apiCreateReplyComment(idComment: string, data: RequestBodyComment): Promise<CommentData> {
+  return $patch(`/blog/comments/${idComment}/reply`, data)
 }
 export async function apiDeleteCommentById(id: string): Promise<CommentData> {
   return $delete(`/blog/comments/${id}`, {})
