@@ -24,7 +24,7 @@ axiosInstance.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config
 
-    if (error.response && error.response.status === 401 && !originalRequest._retry) {
+    if ((error.response && error.response.status === 401 && !originalRequest._retry) || error.response.status === 403) {
       originalRequest._retry = true
       const refreshToken = localStorage.getItem('refreshtoken')
 
@@ -50,6 +50,8 @@ axiosInstance.interceptors.response.use(
         }
       }
       else if (!window.location.pathname.includes('/auth/')) {
+        localStorage.removeItem('accesstoken')
+        localStorage.removeItem('refreshtoken')
         window.location.href = '/auth/login'
       }
     }

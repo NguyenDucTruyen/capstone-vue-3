@@ -47,11 +47,17 @@ async function postCommentReply(content: string) {
     @update-comment="hanldeEmitUpdateComment"
     @change-status-reply="changeStatusReply"
   />
+
+  <!-- Write comment reply -->
+
   <div class="flex flex-col pl-12 mb-6">
     <template v-if="isReplying">
       <span class="my-4 text-sm">What do you want to reply the above comment?</span>
       <Comment @comment="postCommentReply" />
     </template>
+
+    <!-- List comment reply -->
+
     <template
       v-for="commentReply in itemComment?.reply"
       :key="commentReply._id"
