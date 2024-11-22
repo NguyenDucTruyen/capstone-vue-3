@@ -1,16 +1,20 @@
 <script setup lang="ts">
+import type { CommentData } from '@/types/comment'
+import { useUserStore } from '@/stores/user'
+
 interface Emit {
   (event: 'updateComment', data: any): void
   (event: 'comment', data: any): void
 }
 
 interface Props {
-  item: any
+  item: CommentData | null
 }
 
 const props = defineProps<Props>()
 const emit = defineEmits<Emit>()
 
+const userStore = useUserStore()
 const edit = defineModel('edit')
 
 const itemComment = ref(props.item)
@@ -42,7 +46,7 @@ function handleBlur() {
 function save() {
   if (itemComment.value) {
     itemComment.value.content = title.value
-    emit('updateComment', itemComment.value.data)
+    emit('updateComment', itemComment.value)
     edit.value = false
   }
   else {
@@ -52,7 +56,7 @@ function save() {
   }
 }
 function cancelChange() {
-  title.value = itemComment.value.content
+  title.value = itemComment.value?.content || ''
   edit.value = false
 }
 watch(edit, (val) => {
@@ -78,34 +82,34 @@ function getDate(date: string) {
 
 <template>
   <div class="comment-editor">
-    <!-- <img
+    <img
       v-if="itemComment"
-      :src="itemComment.memberCreator.avatarUrl"
+      v-lazy="itemComment.userId.profileImage ?? 'https://static.vecteezy.com/system/resources/thumbnails/024/983/914/small_2x/simple-user-default-icon-free-png.png'"
       alt=""
       class="comment-creator"
     >
-    <img
-      v-else
-      src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSYZ8ZtmkjFdGFK0_FJf-dSL8E7laGwRv33OuZ_IlGMAjrASwhzoNcRwdfLPO2OkKsNyts&usqp=CAU"
-      alt=""
-      class="comment-creator"
-    > -->
+
     <!-- Avatar useUserStore -->
 
     <div v-if="!edit" class="preview-comment">
-      <div v-if="itemComment" class="comment-author">
-        <span class="comment-author-name">{{ itemComment?.userId?.firstName || 'Anonymous' }}</span>
-        <span class="comment-author-time">{{ getDate(itemComment.updatedAt) }}</span>
-      </div>
-      <div v-if="itemComment" class="preview-comment-body ql-snow">
-        <div class="content ql-editor" v-html="itemComment.content" />
-        <div v-if="true" class="preview-comment-body-action">
-          <!-- Check authorization here -->
-          <Button variant="link" type="info" class="file-action relative" @click="switchToEditMode">
-            Chỉnh sửa
-          </Button>
+      <template v-if="itemComment">
+        <div class="comment-author">
+          <span class="comment-author-name max-w-60 truncate">{{ itemComment.userId.email }}</span>
+          <span class="comment-author-time">{{ getDate(itemComment.createdAt) }}</span>
         </div>
-      </div>
+        <div class="preview-comment-body ql-snow">
+          <div class="content ql-editor" v-html="itemComment.content" />
+          <div v-if="true" class="preview-comment-body-action">
+            <!-- Check authorization here -->
+            <Button v-if="itemComment.userId._id === userStore.user?._id" variant="link" type="info" class="file-action relative" @click="switchToEditMode">
+              Edit
+            </Button>
+            <Button v-if="itemComment.reply" variant="link" type="info" class="file-action relative">
+              Write a reply
+            </Button>
+          </div>
+        </div>
+      </template>
       <div v-else class="preview-comment-placeholder" @click="switchToEditMode()">
         Viết bình luận...
       </div>
@@ -142,8 +146,6 @@ function getDate(date: string) {
 }
 .preview-comment-placeholder {
   padding: 8px;
-  color: #44546f;
-  background-color: #fff;
   padding: 8px 12px;
   border-radius: 8px;
   cursor: pointer;
@@ -151,7 +153,6 @@ function getDate(date: string) {
   border-radius: 8px;
 }
 .preview-comment-placeholder:hover {
-  background-color: var(--ds-background-input-hovered, #f7f8f9);
   box-shadow: var(--ds-shadow-raised, 0px 1px 1px #091e4240, 0px 0px 1px #091e424f);
   cursor: pointer;
 }
@@ -165,21 +166,16 @@ function getDate(date: string) {
   font-weight: 600;
   line-height: 18px;
   margin-right: 8px;
-  color: #172b4d;
 }
 .comment-author-time {
   font-size: 12px;
   font-weight: 400;
   line-height: 16px;
-  color: var(--ds-text-subtle, #44546f);
-}
-.preview-comment-body {
-  color: #172b4d;
 }
 .comment-creator {
   position: absolute;
   left: 0;
-  top: 0;
+  top: 4px;
   object-fit: contain;
   width: 32px;
   height: 32px;
@@ -199,22 +195,19 @@ function getDate(date: string) {
 }
 .editor-container {
   border-radius: 2px;
-  background-color: #fff;
   box-shadow: 0 0 0 1px #dbdbdb;
   min-height: 56px;
 }
 .editor-container.focus {
-  box-shadow: 0 0 0 2px #0055cc;
+  box-shadow: 0 0 0 2px hsl(var(--primary));
 }
 .ql-toolbar.ql-snow {
   border: none;
   border-radius: 2px 2px 0 0;
-  background-color: #fff;
 }
 .ql-editor.content {
   padding: 0;
   padding: 8px;
-  background-color: #fff;
   padding: 8px 12px;
   border-radius: 8px;
   cursor: pointer;
@@ -239,6 +232,14 @@ function getDate(date: string) {
   }
   .button-confirm-delete-comment {
     @apply w-full mt-4;
+  }
+  .ql-snow.ql-toolbar button,
+  .ql-toolbar.ql-snow .ql-picker-label {
+    @apply rounded-sm;
+  }
+  .ql-snow.ql-toolbar button.ql-active {
+    color: #333 !important;
+    background-color: #e9ecf1;
   }
 }
 </style>

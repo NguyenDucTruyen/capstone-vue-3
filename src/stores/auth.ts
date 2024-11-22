@@ -15,6 +15,7 @@ export const useAuthStore = defineStore('auth', () => {
     localStorage.setItem('accesstoken', data.token)
     await userStore.getUserData()
     router.push(returnUrl.value || '/home')
+    returnUrl.value = ''
   }
 
   function logout() {

@@ -1,7 +1,8 @@
+import { useAuthStore } from '@/stores/auth'
 import axios from 'axios'
 
 const BASE_URL = import.meta.env.VITE_API_URL
-
+const route = useRoute()
 const axiosInstance = axios.create({
   baseURL: BASE_URL,
 })
@@ -40,6 +41,8 @@ axiosInstance.interceptors.response.use(
           return axiosInstance(originalRequest)
         }
         catch (refreshError) {
+          const authStore = useAuthStore()
+          authStore.setReturnUrl(route.fullPath)
           localStorage.removeItem('accesstoken')
           localStorage.removeItem('refreshtoken')
           window.location.href = '/auth/login'

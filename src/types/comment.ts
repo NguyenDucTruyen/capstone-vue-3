@@ -12,6 +12,10 @@ export interface CommentData {
   _id: string
   userId: {
     _id: string
+    email: string
+    profileImage: string
+    firstName: string
+    lastName: string
   }
   blogId: string
   content: string

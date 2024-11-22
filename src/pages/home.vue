@@ -44,7 +44,7 @@ watch(route, async (newVal) => {
     </div>
     <PaginationTable
       :total="blogs?.totalDocs"
-      :current-page="blogs?.page"
+      :current-page="blogs?.page || 1"
       :items-per-page="query.limit"
     />
   </div>

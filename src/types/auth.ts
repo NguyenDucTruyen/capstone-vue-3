@@ -26,5 +26,4 @@ export interface UserData {
   roleName: string
   createdAt: string
   updatedAt: string
-
 }
