@@ -1,10 +1,15 @@
+<!-- eslint-disable prefer-promise-reject-errors -->
 <script setup lang="ts">
 import type { CommentData } from '@/types/comment'
+import { uploadImage } from '@/api/upload'
+import { toast } from '@/components/ui/toast'
 import { useUserStore } from '@/stores/user'
+import BlotFormatter from 'quill-blot-formatter'
+import ImageUploader from 'quill-image-uploader'
 
 interface Emit {
-  (event: 'updateComment', data: any): void
-  (event: 'comment', data: any): void
+  (event: 'updateComment', data: CommentData): void
+  (event: 'comment', title: string): void
 }
 
 interface Props {
@@ -26,11 +31,33 @@ const enableSave = ref(false)
 const toolbar = [
   [{ header: [false, 1, 2, 3, 4, 5, 6] }],
   ['bold', 'italic', 'strike'],
+  [{ align: [] }],
   [{ list: 'ordered' }, { list: 'bullet' }],
   ['blockquote', 'code-block'],
   ['link', 'image'],
   ['clean'],
 ]
+const modules = [{
+  name: 'blotFormatter',
+  module: BlotFormatter,
+  options: {},
+}, {
+  name: 'imageUploader',
+  module: ImageUploader,
+  options: { upload: async (file: File) => {
+    if (!file.type.startsWith('image/')) {
+      toast({
+        title: 'Error',
+        description: 'Only image files are allowed.',
+        variant: 'destructive',
+      })
+      return Promise.reject('Only image files are allowed.')
+    }
+    const response = await uploadImage(file)
+    return Promise.resolve(response.url)
+  },
+  },
+}]
 function switchToEditMode() {
   if (itemComment.value?.content) {
     title.value = itemComment.value.content
@@ -52,7 +79,7 @@ function save() {
   else {
     emit('comment', title.value)
     title.value = ''
-    edit.value = false
+    quill.value?.setContents('')
   }
 }
 function cancelChange() {
@@ -81,17 +108,14 @@ function getDate(date: string) {
 </script>
 
 <template>
-  <div class="comment-editor">
+  <div class="comment-editor" :class="{ 'pl-10': itemComment }">
     <img
       v-if="itemComment"
       v-lazy="itemComment.userId.profileImage ?? 'https://static.vecteezy.com/system/resources/thumbnails/024/983/914/small_2x/simple-user-default-icon-free-png.png'"
       alt=""
       class="comment-creator"
     >
-
-    <!-- Avatar useUserStore -->
-
-    <div v-if="!edit" class="preview-comment">
+    <div v-if="!edit && itemComment" class="preview-comment">
       <template v-if="itemComment">
         <div class="comment-author">
           <span class="comment-author-name max-w-60 truncate">{{ itemComment.userId.email }}</span>
@@ -101,12 +125,22 @@ function getDate(date: string) {
           <div class="content ql-editor" v-html="itemComment.content" />
           <div v-if="true" class="preview-comment-body-action">
             <!-- Check authorization here -->
-            <Button v-if="itemComment.userId._id === userStore.user?._id" variant="link" type="info" class="file-action relative" @click="switchToEditMode">
-              Edit
-            </Button>
-            <Button v-if="itemComment.reply" variant="link" type="info" class="file-action relative">
-              Write a reply
-            </Button>
+            <template
+              v-if="itemComment.reply"
+            >
+              <Button
+                v-if="itemComment.userId._id === userStore.user?._id
+                  || userStore.user?.roleName === 'ADMIN'"
+                variant="link"
+                type="info"
+                class="file-action relative" @click="switchToEditMode"
+              >
+                Edit
+              </Button>
+              <Button variant="link" type="info" class="file-action relative">
+                Write a reply
+              </Button>
+            </template>
           </div>
         </div>
       </template>
@@ -121,6 +155,7 @@ function getDate(date: string) {
           v-model:content="title"
           content-type="html"
           :toolbar="toolbar"
+          :modules="modules"
           placeholder="Viết bình luận..."
           @focus="handleFocus"
           @blur="handleBlur"
@@ -128,10 +163,10 @@ function getDate(date: string) {
       </div>
       <div class="editor-footer">
         <Button :disabled="!enableSave" @click="save">
-          Lưu
+          Save
         </Button>
         <Button v-if="itemComment" variant="secondary" type="info" @click="cancelChange">
-          Hủy bỏ
+          Cancel
         </Button>
       </div>
     </div>
@@ -141,7 +176,6 @@ function getDate(date: string) {
 <style scoped>
 .comment-editor {
   position: relative;
-  padding-left: 40px;
   margin-bottom: 8px;
 }
 .preview-comment-placeholder {
@@ -191,7 +225,7 @@ function getDate(date: string) {
   content: '•';
 }
 .editor-footer {
-  @apply mt-2 gap-2 flex;
+  @apply mt-4 gap-2 flex;
 }
 .editor-container {
   border-radius: 2px;

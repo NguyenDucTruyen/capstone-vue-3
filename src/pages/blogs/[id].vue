@@ -10,6 +10,7 @@
 <script setup lang="ts">
 import type { BlogData, Reaction } from '@/types/blog'
 import type { CommentData, CommentReply, RequestBodyComment } from '@/types/comment'
+import { toast } from '@/components/ui/toast'
 import { useBlogStore } from '@/stores/blog'
 import { useCommentStore } from '@/stores/comment'
 import { useUserStore } from '@/stores/user'
@@ -41,6 +42,29 @@ const userReaction = computed(() => {
   const reaction = blog.value?.reaction.find((reaction: Reaction) => reaction.userId === userStore.user?._id)
   return reaction?.reaction || null
 })
+
+async function postComment(content: string) {
+  const response = await commentStore.createComment(blog.value?._id as string, { content })
+  const newComment = {
+    ...response,
+    userId: {
+      _id: userStore.user?._id as string,
+      email: userStore.user?.email as string,
+    },
+  } as CommentData
+  comments.value.push(newComment)
+  toast({
+    title: 'Success',
+    description: 'Comment posted successfully.',
+  })
+}
+async function hanldeUpdateComment(data: CommentData) {
+  await commentStore.updateCommentById(data._id, { content: data.content })
+  toast({
+    title: 'Success',
+    description: 'Comment updated successfully.',
+  })
+}
 </script>
 
 <template>
@@ -79,7 +103,7 @@ const userReaction = computed(() => {
     </div>
     <Separator />
     <div class="mb-4">
-      <div class="flex my-4">
+      <div class="flex my-4 h-8 items-center">
         <Button :variant="userReaction === 'like' ? '' : 'outline'" class="mr-2">
           <Icon name="IconThumbsUp" />
           <span class="ml-2">Like ({{ countLike }})</span>
@@ -88,12 +112,19 @@ const userReaction = computed(() => {
           <Icon name="IconThumbsDown" />
           <span class="ml-2">Dislike ({{ countDislike }})</span>
         </Button>
-      </div>
-      <div class="flex items-center gap-2">
-        <Icon name="IconComment" />
-        <span>{{ countComment }} Comments</span>
+        <!-- <Separator orientation="vertical" /> -->
+        <div class="flex items-center gap-2 ml-2">
+          <Icon name="IconComment" />
+          <span>{{ countComment }} Comments</span>
+        </div>
       </div>
     </div>
+    <h1 class="text-xl mt-10 mb-8">
+      Does This Topic Interest You? Let Us Know What You Think!
+    </h1>
+    <Comment
+      @comment="postComment"
+    />
     <!-- <Separator label="Comment Area" label-style="text-xl" class="my-4 h-1" /> -->
     <template
       v-for="item in comments"
@@ -102,6 +133,7 @@ const userReaction = computed(() => {
       <Separator label="Comment" label-style=" text-lg" class="my-4 h-[2px]" />
       <CommentBox
         :comment="item"
+        @update-comment="hanldeUpdateComment"
       />
     </template>
   </section>
