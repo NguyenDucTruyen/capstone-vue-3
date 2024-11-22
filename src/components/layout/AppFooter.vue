@@ -7,9 +7,9 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="main px-4 divide-y bg-muted">
+  <div class="main sm:px-4  bg-muted">
     <div
-      class="container flex flex-col justify-between py-10 mx-auto space-y-8 lg:flex-row lg:space-y-0"
+      class="container flex flex-col justify-between py-10 mx-auto lg:flex-row"
     >
       <div
         class="grid grid-cols-2 text-sm gap-x-3 gap-y-8 w-full sm:grid-cols-4"

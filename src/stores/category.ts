@@ -1,4 +1,4 @@
-import type { Category } from '@/utils/types'
+import type { Category } from '@/types'
 import { apiGetCategories } from '@/api/category'
 import { defineStore } from 'pinia'
 

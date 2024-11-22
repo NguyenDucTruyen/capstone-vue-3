@@ -6,10 +6,10 @@
       title: "Create",
       }
   }
-  </route>
+</route>
 
 <script setup lang="ts">
-import type { RequestCreateBlog, ResponseBlogData } from '@/utils/types/blog'
+import type { RequestCreateBlog, ResponseBlogData } from '@/types/blog'
 import { uploadImage } from '@/api/upload'
 import {
   Select,

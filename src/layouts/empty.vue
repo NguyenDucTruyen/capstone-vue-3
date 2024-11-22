@@ -1,7 +1,6 @@
 <script setup>
 const inputSearch = useTemplateRef('input-search')
 const searchValue = ref('')
-const router = useRouter()
 const route = useRoute()
 onMounted(() => {
   if (route.query.q) {
@@ -19,8 +18,8 @@ onMounted(() => {
         <AppHeader />
       </header>
       <ScrollArea class="w-full h-[calc(100%-6.5rem)]">
-        <div class="flex justify-center gap-8 w-[calc(100%-4rem)]  pb-6">
-          <div class="flex flex-col gap-4 h-full rounded-xl max-w-4xl flex-1">
+        <div class="flex justify-center gap-8  pb-6">
+          <div class="flex flex-col gap-4 h-full rounded-xl max-w-4xl flex-1 overflow-auto">
             <Suspense>
               <router-view />
               <template #fallback>

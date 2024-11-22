@@ -10,7 +10,7 @@ const userStore = useUserStore()
   <div class="flex items-center justify-between w-full bg-muted h-full gap-2 p-2 lg:pr-8">
     <div class="flex p-4 pl-8 gap-2 cursor-pointer items-center">
       <Icon name="IconLogo" class="w-10 h-10" />
-      <h1 class="text-3xl font-bold text-primary">
+      <h1 class="max-sm:hidden text-3xl font-bold text-primary">
         S-Forum
       </h1>
     </div>

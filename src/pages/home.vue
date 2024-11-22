@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { BlogData, ResponseBlogData } from '@/utils/types'
+import type { BlogData, ResponseBlogData } from '@/types'
 import { useBlogStore } from '@/stores/blog'
 
 const route = useRoute()
@@ -37,23 +37,9 @@ watch(route, async (newVal) => {
       class="blog w-full"
     >
       <BlogCard
-        :image-link="blog.blogImage ?? null"
-        :author="`${blog.userId?.firstName ?? ''} ${
-          blog.userId?.lastName ?? ''
-        }`"
-        :like="
-          blog.reaction?.filter((e) => {
-            return e.reaction === 'like'
-          }).length
-        "
-        :dislike="
-          blog.reaction?.filter((e) => {
-            return e.reaction === 'dislike'
-          }).length
-        "
-        :title="blog.title"
-        :time="blog.createdAt"
-        :category="blog.category?.name ?? ''"
+        :value="blog"
+        :category="blog.category?.name ?? 'Uncategorized'"
+        @click="$router.push(`/blogs/${blog._id}`)"
       />
     </div>
     <PaginationTable

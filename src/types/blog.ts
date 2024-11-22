@@ -17,6 +17,11 @@ export interface Category {
   description: string
 }
 
+export interface Reaction {
+  _id: string
+  userId: string
+  reaction: string
+}
 export interface BlogData {
   _id: string
   userId: UserData
@@ -27,7 +32,7 @@ export interface BlogData {
   status: string
   reactionCount: number
   deleted: boolean
-  reaction: any[]
+  reaction: Reaction[]
   createdAt: string
   updatedAt: string
 }
