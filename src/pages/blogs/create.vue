@@ -9,9 +9,7 @@
 </route>
 
 <script setup lang="ts">
-import type { RequestCreateBlog, ResponseBlogData } from '@/types/blog'
 import { uploadImage } from '@/api/upload'
-import { FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form'
 import {
   Select,
   SelectContent,

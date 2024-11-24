@@ -2,9 +2,6 @@
 import { useCategoryStore } from '@/stores/category'
 
 const categoryStore = useCategoryStore()
-onMounted(async () => {
-  await categoryStore.fetchCategories()
-})
 </script>
 
 <template>

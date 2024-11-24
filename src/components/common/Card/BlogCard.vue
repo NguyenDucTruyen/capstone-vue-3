@@ -5,16 +5,6 @@ import type { BlogData, Reaction } from '@/types/blog'
 const props = defineProps<{
   value: BlogData
 }>()
-// like="
-//   blog.reaction?.filter((e) => {
-//     return e.reaction === 'like'
-//   }).length
-// "
-// dislike="
-//   blog.reaction?.filter((e) => {
-//     return e.reaction === 'dislike'
-//   }).length
-// "
 const like = computed(() => props.value.reaction?.filter((e: Reaction) => e.reaction === 'like').length)
 const dislike = computed(() => props.value.reaction?.filter((e: Reaction) => e.reaction === 'dislike').length)
 const formattedTime = computed(() => props.value.createdAt.split('T')[0])
