@@ -1,6 +1,7 @@
 <script setup>
 import UserDropdown from '@/components/common/UserDropdown.vue'
 import Button from '@/components/ui/button/Button.vue'
+import { useThemeStore } from '@/stores/theme'
 import { useUserStore } from '@/stores/user'
 
 const userStore = useUserStore()
@@ -8,16 +9,13 @@ const userStore = useUserStore()
 
 <template>
   <div class="flex items-center justify-between w-full bg-muted h-full gap-2 p-2 lg:pr-8">
-    <div class="flex p-4 pl-8 gap-2 cursor-pointer items-center">
+    <RouterLink to="/home?page=1" class="flex p-4 pl-8 gap-2 cursor-pointer items-center">
       <Icon name="IconLogo" class="w-10 h-10" />
       <h1 class="max-sm:hidden text-3xl font-bold text-primary">
         S-Forum
       </h1>
-    </div>
-    <div class="flex gap-2">
-      <Navigator to="/home?page=1" icon="IconHome" />
-    </div>
-    <div class="flex">      
+    </RouterLink>
+    <div class="flex flex-2">
       <UserDropdown v-if="userStore?.user" />
       <template v-else>
         <router-link to="/auth/register">

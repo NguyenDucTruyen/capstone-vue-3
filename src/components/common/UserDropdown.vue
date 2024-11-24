@@ -36,13 +36,6 @@ function handleChange(value) {
         </div>
       </DropdownMenuItem>
       <DropdownMenuSeparator />
-      <DropdownMenuItem>
-        <div class="flex justify-between item-centers w-full items-center">
-          <span>Theme color</span>
-          <ColorSelect custom-class="w-1/2" />
-        </div>
-      </DropdownMenuItem>
-      <DropdownMenuSeparator />
       <DropdownMenuItem> Profile </DropdownMenuItem>
       <DropdownMenuSeparator />
       <DropdownMenuItem @click="authStore.logout()">

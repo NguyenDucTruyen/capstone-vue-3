@@ -24,7 +24,7 @@ watch(route, async (newVal) => {
   query.value.page = Number(newVal.query.page)
   blogs.value = null
   isLoading.value = true
-  blogs.value = await blogStore.getBlogs({ params: query.value }) as ResponseBlogData
+  blogs.value = await blogStore.getNewBlogs({ params: query.value }) as ResponseBlogData
   isLoading.value = false
 }, { immediate: true })
 function handleUpdateQuery() {
@@ -42,28 +42,12 @@ function handleDeleteQuery() {
 <template>
   <div class="rounded-lg p-6 bg-muted">
     <h2 class="text-2xl font-bold mb-2">
-      Well come
+      Newest blogs
     </h2>
     <p class="text-sm mb-4">
-      How are you today, {{ userStore?.user?.email }}?
+      What's new? Interesting posts for you, {{ userStore?.user?.email }}!
     </p>
     <div class="relative w-full flex justify-between items-center gap-4">
-      <div class="relative w-full max-w-sm items-center">
-        <input
-          v-model="query.title"
-          type="text"
-          placeholder="Type tile to search"
-          class="flex h-10 w-full border border-input px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 pl-10 rounded-full bg-background max-w-sm"
-          @change="handleUpdateQuery"
-          @input="handleDeleteQuery"
-        >
-        <span
-          class="absolute start-0 inset-y-0 flex items-center justify-center h-10"
-          style="left: 0.75rem"
-        >
-          <Icon name="IconSearch" class="w-4" />
-        </span>
-      </div>
       <RouterLink to="/blogs/create">
         <Button>Create blog</Button>
       </RouterLink>

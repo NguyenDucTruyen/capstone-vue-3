@@ -11,6 +11,12 @@ export async function apiCreateBlog(data: RequestCreateBlog): Promise<ResponseBl
 export async function apiGetBlogById(id: string): Promise<BlogData> {
   return $get(`/blogs/${id}`)
 }
+export async function apiGetNewBlogs(config: any): Promise<ResponseBlogData> {
+  return $get('/blogs/newest', config)
+}
+export async function apiGetPopularBlogs(config: any): Promise<ResponseBlogData> {
+  return $get('/blogs/popular', config)
+}
 // Fake data:
 /**
  * [

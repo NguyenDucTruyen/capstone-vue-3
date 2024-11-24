@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { ColorsType } from '@/types/theme-type'
+import type { ColorsType } from '@/types/'
 import { Button } from '@/components/ui/button'
 import { useThemeStore } from '@/stores/theme'
 import { ref } from 'vue'
