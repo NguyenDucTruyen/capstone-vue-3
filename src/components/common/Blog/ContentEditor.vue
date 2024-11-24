@@ -10,6 +10,7 @@ interface Emit {
   (event: 'updateContent', value: string): void
 }
 const emit = defineEmits<Emit>()
+defineExpose({ clearContent })
 const modules = [{
   name: 'blotFormatter',
   module: BlotFormatter,
@@ -46,6 +47,10 @@ const toolbar = [
 watch(content, (value) => {
   emit('updateContent', value)
 })
+function clearContent() {
+  content.value = ''
+  quill.value?.setContents('')
+}
 </script>
 
 <template>

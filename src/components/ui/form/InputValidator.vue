@@ -2,17 +2,20 @@
 import { FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form'
 
 interface InputProps {
+  modelValue?: string
   id?: string
   type?: string
   placeholder?: string
   label?: string
   name?: string
+  classCustom?: string
 }
 const props = withDefaults(defineProps<InputProps>(), {
   id: 'text',
   type: 'text',
-  label: 'Text',
+  label: '',
   name: 'text',
+  classCustom: '',
 })
 const isShowPassword = ref(false)
 function toggleShowIcon() {
@@ -24,19 +27,21 @@ const typeInputComputed = computed(() => {
 </script>
 
 <template>
-  <FormField v-slot="{ componentField }" :name="props.name" :validate-on-blur="false">
-    <div class="space-y-2 h-24 relative">
-      <Label :for="props.id">{{ props.label }}</Label>
+  <FormField v-slot="{ componentField }" :model-value="props.modelValue" :name="props.name" :validate-on-blur="true">
+    <div class="space-y-2 h-24 relative" :class="props.classCustom">
+      <Label v-if="props.label" :for="props.id">{{ props.label }}</Label>
       <FormItem>
         <FormControl>
-          <Input
-            :id="props.id"
-            :type="typeInputComputed"
-            :placeholder="props.placeholder"
-            v-bind="componentField"
-            class="pr-9"
-            autocomplete="off"
-          />
+          <slot :component-field="componentField">
+            <Input
+              :id="props.id"
+              :type="typeInputComputed"
+              :placeholder="props.placeholder"
+              v-bind="componentField"
+              class="pr-9"
+              autocomplete="off"
+            />
+          </slot>
           <div
             v-if="props.type === 'password'"
             class="w-10 h-10 absolute right-0 top-0 cursor-pointer flex items-center justify-center"

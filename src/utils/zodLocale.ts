@@ -3,7 +3,6 @@ import type { ZodErrorMap } from 'zod';
 import { z, ZodIssueCode } from 'zod';
 
 export const errorMap: ZodErrorMap = (issue, _ctx) => {
-  // console.log(issue)
   switch (issue.code) {
     case ZodIssueCode.invalid_type:
       if (issue.received === 'undefined') {
