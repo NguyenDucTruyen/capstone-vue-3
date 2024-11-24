@@ -32,7 +32,7 @@ const formattedTime = computed(() => props.value.createdAt.split('T')[0])
         <p class="font-medium truncate">
           {{ props.value.title }}
         </p>
-        <p class="text-muted-foreground text-xs">
+        <p class="text-muted-foreground text-xs hidden sm:flex">
           Author: {{ props.value.userId.email }}
         </p>
       </div>
@@ -53,7 +53,7 @@ const formattedTime = computed(() => props.value.createdAt.split('T')[0])
           <p class="text-muted-foreground text-xs">
             {{ dislike }} Dislikes
           </p>
-          <p class="text-muted-foreground text-xs">
+          <p class="text-muted-foreground text-xs hidden sm:flex">
             {{ formattedTime }}
           </p>
         </div>

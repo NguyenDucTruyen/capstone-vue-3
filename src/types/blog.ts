@@ -1,20 +1,11 @@
 import type { UserData } from './auth'
+import type { Category } from './category'
 
 export interface RequestCreateBlog {
   category: string
   title: string
   content: string
   blogImages: string[]
-}
-
-export interface Category {
-  _id: string
-  name: string
-  status: string
-  slug: string
-  createdAt: string
-  updatedAt: string
-  description: string
 }
 
 export interface Reaction {

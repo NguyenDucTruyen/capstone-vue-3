@@ -3,8 +3,8 @@ const props = defineProps<{
   to: string
   icon?: string
 }>()
-const router = useRouter()
-const isActive = computed(() => props.to.includes(router.currentRoute.value.name as string))
+const route = useRoute()
+const isActive = computed(() => route.fullPath.includes(props.to))
 </script>
 
 <template>
