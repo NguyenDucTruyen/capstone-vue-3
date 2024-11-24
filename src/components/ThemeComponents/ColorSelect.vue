@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { ColorsType } from '@/types/'
-import { Button } from '@/components/ui/button'
 import { useThemeStore } from '@/stores/theme'
 import { ref } from 'vue'
 
@@ -14,7 +13,7 @@ const themeStore = useThemeStore()
 function setColor(color: ColorsType) {
   themeStore.setColor(color)
 }
-const colors = ref<ColorsType[]>(['rose', 'blue', 'green', 'orange', 'zinc'],
+const colors = ref<ColorsType[]>(['rose', 'blue', 'green', 'orange'],
 )
 </script>
 

@@ -26,7 +26,7 @@ const onSubmit = form.handleSubmit(async (values) => {
 </script>
 
 <template>
-  <form class="sm:min-w-[25rem]" @submit.prevent="onSubmit">
+  <form class="rounded-lg border bg-card text-card-foreground shadow-sm mx-auto max-w-sm h-max sm:min-w-[25rem]" @submit.prevent="onSubmit">
     <Card class="mx-auto max-w-sm">
       <CardHeader>
         <CardTitle class="text-2xl text-center">

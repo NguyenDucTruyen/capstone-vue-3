@@ -121,7 +121,7 @@ function updateContent(newContent: string) {
     </div>
     <div class="grid grid-cols-3 gap-4 mb-6">
       <div class="col-span-1 flex flex-col justify-center relative items-center">
-        <Avatar class="h-40 w-40 rounded-lg cursor-pointer relative" @click="() => fileInput?.click()">
+        <Avatar class="h-28 w-28 sm:h-40 sm:w-40 rounded-lg cursor-pointer relative" @click="() => fileInput?.click()">
           <div v-if="file" class="flex justify-center items-center rounded-sm absolute right-1 top-1 hover:bg-muted-foreground bg-secondary p-1 cursor-pointer" @click.stop="clearImage">
             <X />
           </div>

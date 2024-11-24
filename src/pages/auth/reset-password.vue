@@ -32,7 +32,7 @@ const onSubmit = form.handleSubmit(async (values) => {
 </script>
 
 <template>
-  <form class="rounded-lg border bg-card text-card-foreground shadow-sm mx-auto max-w-sm h-max sm:min-w-[25rem]" @submit.prevent="onSubmit">
+  <form class="rounded-lg border bg-card text-card-foreground shadow-sm mx-auto max-w-sm h-max w-[20rem] sm:min-w-[25rem]" @submit.prevent="onSubmit">
     <CardHeader>
       <CardTitle class="text-2xl text-center">
         Reset Password
@@ -48,7 +48,6 @@ const onSubmit = form.handleSubmit(async (values) => {
           type="text"
           label="Token reset password"
           placeholder="Token reset password"
-          required
           name="token"
           autocomplete="off"
         />

@@ -9,7 +9,7 @@ export const passwordSchema = z
   .refine(value => /[a-z]/.test(value), { message: 'Password must include lowercase letter' })
   .refine(value => /[A-Z]/.test(value), { message: 'Password must include uppercase letter' })
   .refine(value => /\d/.test(value), { message: 'Password must include at least one number' })
-  .refine(value => /[@$!%*?&]/.test(value), { message: 'Password must include at least one special character' })
+  .refine(value => /[@$!%*?&]/.test(value), { message: 'Password must contain a special character' })
 
 export const requiredStringSchema = z.string()
 

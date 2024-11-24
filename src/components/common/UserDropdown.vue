@@ -32,6 +32,11 @@ function handleChange(value) {
     <DropdownMenuContent class="w-52 rounded-lg" side="bottom" align="end" :side-offset="4">
       <DropdownMenuItem>
         <div class="flex justify-between item-centers w-full items-center">
+          <span>Color theme</span><ColorSelect custom-class="max-w-24" />
+        </div>
+      </DropdownMenuItem>
+      <DropdownMenuItem>
+        <div class="flex justify-between item-centers w-full items-center">
           <span>Dark mode</span><Switch :checked="themeStore.theme === 'dark'" @update:checked="handleChange" />
         </div>
       </DropdownMenuItem>

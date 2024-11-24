@@ -9,7 +9,7 @@ const isActive = computed(() => route.fullPath.includes(props.to))
 
 <template>
   <RouterLink :to="props.to">
-    <div :class="{ isActive }" class="flex items-center justify-center p-2 gap-2">
+    <div :class="{ isActive }" class="flex items-center justify-center text-foreground  p-2 gap-2">
       <Icon :name="props.icon" class="w-6 h-6" />
     </div>
   </RouterLink>

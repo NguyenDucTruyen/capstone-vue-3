@@ -3,7 +3,7 @@ import { defineStore } from 'pinia'
 
 export const useThemeStore = defineStore('themeStore', () => {
   const themeLocal = localStorage.getItem('theme') || 'light'
-  const colorsLocal = localStorage.getItem('color') || 'zinc'
+  const colorsLocal = localStorage.getItem('color') || 'rose'
 
   const theme = ref<ThemeType>(themeLocal as ThemeType)
   const color = ref<ColorsType>(colorsLocal as ColorsType)
