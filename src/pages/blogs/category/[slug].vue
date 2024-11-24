@@ -26,8 +26,10 @@ if (!route.query.page) {
 }
 
 watch(route, async (newVal) => {
+  const container = document.querySelector('.container-default')
+  if (container)
+    container.scrollTo({ top: 0, behavior: 'smooth' })
   query.value.page = Number(newVal.query.page)
-  category.value = null
   isLoading.value = true
   category.value = await categoryStore.getCategoryBySlug(route.params.slug as string, { params: query.value })
   isLoading.value = false
@@ -50,7 +52,7 @@ function handleDeleteQuery() {
       Well come to {{ category?.name }} category
     </h2>
     <p class="text-sm mb-4">
-        {{ category?.description }}
+      {{ category?.description }}
     </p>
     <div class="relative w-full flex justify-between items-center gap-4">
       <div class="relative w-full max-w-sm items-center">
@@ -74,10 +76,10 @@ function handleDeleteQuery() {
       </RouterLink>
     </div>
   </div>
-  <div v-show="isLoading" class="flex w-full p-8 justify-center items-center">
+  <div v-show="isLoading && !category" class="flex w-full p-8 justify-center items-center">
     <Icon name="IconLoading" />
   </div>
-  <div v-if="category?.blogs" class="flex flex-col p-6 bg-muted rounded-lg flex-1">
+  <div v-if="category?.blogs" class="flex flex-col p-6 bg-muted rounded-lg flex-1 relative pt-12">
     <template v-if="category?.blogs.length">
       <div
         v-for="blog in category?.blogs"
@@ -99,5 +101,8 @@ function handleDeleteQuery() {
     <p v-else class="text-lg text-center text-muted-foreground">
       No blog found
     </p>
+    <div v-show="isLoading" class="flex w-full justify-center items-center absolute top-2 left-0">
+      <Icon name="IconLoading" />
+    </div>
   </div>
 </template>

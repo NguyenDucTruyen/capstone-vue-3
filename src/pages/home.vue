@@ -21,8 +21,10 @@ if (!route.query.page) {
 }
 
 watch(route, async (newVal) => {
+  const container = document.querySelector('.container-default')
+  if (container)
+    container.scrollTo({ top: 0, behavior: 'smooth' })
   query.value.page = Number(newVal.query.page)
-  blogs.value = null
   isLoading.value = true
   blogs.value = await blogStore.getBlogs({ params: query.value }) as ResponseBlogData
   isLoading.value = false
@@ -69,10 +71,10 @@ function handleDeleteQuery() {
       </RouterLink>
     </div>
   </div>
-  <div v-show="isLoading" class="flex w-full p-8 justify-center items-center">
+  <div v-show="isLoading && !blogs" class="flex w-full p-8 justify-center items-center">
     <Icon name="IconLoading" />
   </div>
-  <div v-if="blogs?.docs" class="flex flex-col p-6 bg-muted rounded-lg flex-1">
+  <div v-if="blogs?.docs" class="flex flex-col p-6 bg-muted rounded-lg flex-1 pt-12 relative">
     <template v-if="blogs?.docs.length">
       <div
         v-for="blog in blogs?.docs"
@@ -94,5 +96,8 @@ function handleDeleteQuery() {
     <p v-else class="text-lg text-center text-muted-foreground">
       No blog found
     </p>
+    <div v-show="isLoading" class="flex w-full justify-center items-center absolute top-2 left-0">
+      <Icon name="IconLoading" />
+    </div>
   </div>
 </template>

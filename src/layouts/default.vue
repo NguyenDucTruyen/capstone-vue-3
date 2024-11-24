@@ -7,7 +7,7 @@
       <header class="flex w-full h-20 items-center">
         <AppHeader />
       </header>
-      <div class="w-full h-[calc(100%-6rem)] flex flex-col justify-between overflow-auto custom-scroll">
+      <div class="w-full h-[calc(100%-6rem)] flex flex-col justify-between overflow-auto custom-scroll container-default">
         <div class="flex justify-center gap-8 w-[calc(100%-4rem)] pb-6 mx-auto">
           <AppSideBar class="max-lg:hidden" />
           <div class="flex flex-col gap-4 h-full rounded-xl max-w-4xl flex-1">
