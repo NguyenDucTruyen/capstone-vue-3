@@ -45,13 +45,14 @@ const titleSchema = z.string().min(2).max(255)
 const categorySchema = z.string()
 const contentSchema = z.string().min(20)
 
-const MAX_FILE_SIZE = 2 * 1024 * 1024
+const MAX_FILE_SIZE = 3 * 1024 * 1024
 const ACCEPTED_IMAGE_TYPES = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp']
 const fileSchema = z
-  .instanceof(File)
-  .refine(file => file.size < MAX_FILE_SIZE, 'File must be less than 2MB')
+  .any()
+  .refine((file: File) => !!file, 'Require a thumbnail image')
+  .refine(file => !!file && file.size < MAX_FILE_SIZE, 'File must be less than 3MB')
   .refine(
-    file => ACCEPTED_IMAGE_TYPES.includes(file.type),
+    file => !!file && ACCEPTED_IMAGE_TYPES.includes(file.type),
     'File must be a valid image format (.jpg, .jpeg, .png and .webp)',
   )
 
@@ -78,7 +79,7 @@ const onSubmit = handleSubmit(async (values) => {
   await blogStore.createBlog(body)
   toast({
     title: 'Success',
-    description: 'Blog created successfully',
+    description: 'Blog created successfully, wait for the admin to approve it.',
   })
   resetData()
   isLoading.value = false
@@ -95,7 +96,6 @@ function handleUploadImage(e: Event, field: any) {
   if (!files?.length) {
     return
   }
-
   file.value = files[0]
   setFieldValue(field.name, file.value)
   const blob = URL.createObjectURL(file.value)
@@ -108,15 +108,11 @@ function clearImage() {
 }
 function updateContent(newContent: string) {
   content.value = newContent
-  console.log(content.value)
 }
 </script>
 
 <template>
-  <div v-if="isLoading" class="flex w-full p-8 justify-center items-center">
-    <Icon name="IconLoading" />
-  </div>
-  <form v-else class="p-8 rounded-md" @submit.prevent="onSubmit">
+  <form class="p-8 rounded-md" @submit.prevent="onSubmit">
     <div class="flex flex-col items-center mb-8">
       <h1 class="text-2xl font-semibold mb-2 flex items-center gap-2">
         <BookText />  Create Blog
@@ -206,8 +202,14 @@ function updateContent(newContent: string) {
         Cancel
       </RouterLink>
     </Button>
-    <Button type="submit" class="mt-8 ml-4">
-      Save changes
+    <Button type="submit" :disabled="isLoading" class="mt-4 ml-4">
+      <template v-if="isLoading">
+        <Icon name="IconLoading" />
+        Please wait
+      </template>
+      <template v-else>
+        Create Blog
+      </template>
     </Button>
   </form>
 </template>
