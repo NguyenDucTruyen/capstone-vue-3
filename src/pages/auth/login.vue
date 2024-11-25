@@ -8,6 +8,7 @@
   </route>
 
 <script setup lang="ts">
+import { toast } from '@/components/ui/toast'
 import { useAuthStore } from '@/stores/auth'
 import { loginValidator } from '@/utils/validation'
 import { toTypedSchema } from '@vee-validate/zod'
@@ -19,9 +20,25 @@ const authStore = useAuthStore()
 const form = useForm({
   validationSchema: toTypedSchema(loginValidator),
 })
-
+const isLoading = ref(false)
 const onSubmit = form.handleSubmit(async (values) => {
-  authStore.login(values)
+  try {
+    isLoading.value = true
+    await authStore.login(values)
+  }
+  catch (error: Error | any) {
+    const data = error?.response?.data
+    const errorMessage = data?.message[0]?.message || data?.message || data?.error || 'Some thing went wrong'
+    toast({
+      title: 'Error',
+      description: errorMessage,
+      variant: 'destructive',
+      duration: 5000,
+    })
+  }
+  finally {
+    isLoading.value = false
+  }
 })
 </script>
 
@@ -47,8 +64,14 @@ const onSubmit = form.handleSubmit(async (values) => {
               </RouterLink>
             </div>
           </div>
-          <Button type="submit">
-            Login
+          <Button type="submit" :disabled="isLoading" class="ml-4">
+            <template v-if="isLoading">
+              <Icon name="IconLoading" />
+              Please wait
+            </template>
+            <template v-else>
+              Login
+            </template>
           </Button>
         </div>
         <div class="mt-4 text-center text-sm">

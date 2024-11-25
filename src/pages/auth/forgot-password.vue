@@ -21,14 +21,29 @@ const authStore = useAuthStore()
 const form = useForm({
   validationSchema: toTypedSchema(emailValidator),
 })
-
+const isLoading = ref(false)
 const onSubmit = form.handleSubmit(async (values) => {
-  await authStore.sendEmailResetPassword(values)
-  toast({
-    title: 'Success',
-    description: 'Email sent successfully, check your inbox',
-  })
-  router.push('/auth/reset-password')
+  try {
+    await authStore.sendEmailResetPassword(values)
+    toast({
+      title: 'Success',
+      description: 'Email sent successfully, check your inbox',
+    })
+    router.push('/auth/reset-password')
+  }
+  catch (error: Error | any) {
+    const data = error?.response?.data
+    const errorMessage = Array.isArray(data?.message) ? data.message[0]?.message : data?.message || data?.error || 'Some thing went wrong'
+    toast({
+      title: 'Error',
+      description: errorMessage,
+      variant: 'destructive',
+      duration: 5000,
+    })
+  }
+  finally {
+    isLoading.value = false
+  }
 })
 </script>
 
@@ -48,8 +63,14 @@ const onSubmit = form.handleSubmit(async (values) => {
           <div class="grid gap-2">
             <InputValidator id="email" type="email" label="Email" placeholder="m@gmai.com" name="email" />
           </div>
-          <Button type="submit">
-            Send Email
+          <Button type="submit" :disabled="isLoading" class="ml-4">
+            <template v-if="isLoading">
+              <Icon name="IconLoading" />
+              Please wait
+            </template>
+            <template v-else>
+              Send Email
+            </template>
           </Button>
         </div>
         <div class="mt-4 text-center text-sm">
