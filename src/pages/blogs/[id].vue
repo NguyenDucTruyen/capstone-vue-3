@@ -44,10 +44,9 @@ async function postComment(content: string) {
     },
   } as CommentData
   comments.value.push(newComment)
-  toast({
-    title: 'Success',
-    description: 'Comment posted successfully.',
-  })
+  const container = document.querySelector('.container-default')
+  if (container)
+    container.scrollTo({ top: container.scrollHeight, behavior: 'smooth' })
 }
 async function hanldeUpdateComment(data: CommentData) {
   await commentStore.updateCommentById(data._id, { content: data.content })
@@ -55,6 +54,11 @@ async function hanldeUpdateComment(data: CommentData) {
     title: 'Success',
     description: 'Comment updated successfully.',
   })
+}
+async function deleteComment(id: string) {
+  await commentStore.deleteCommentById(id)
+  const index = comments.value.findIndex(comment => comment._id === id)
+  comments.value.splice(index, 1)
 }
 </script>
 
@@ -125,6 +129,7 @@ async function hanldeUpdateComment(data: CommentData) {
       <CommentBox
         :comment="item"
         @update-comment="hanldeUpdateComment"
+        @delete="deleteComment"
       />
     </template>
   </section>

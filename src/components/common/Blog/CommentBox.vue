@@ -6,6 +6,7 @@ import { useUserStore } from '@/stores/user'
 
 interface Emit {
   (event: 'updateComment', data: CommentData): void
+  (event: 'delete', id: string): void
 }
 const props = defineProps<Props>()
 const emit = defineEmits<Emit>()
@@ -39,6 +40,10 @@ async function postCommentReply(content: string) {
     description: 'Comment posted successfully.',
   })
 }
+async function deleteComment(id: string) {
+  console.log(id)
+  emit('delete', id)
+}
 </script>
 
 <template>
@@ -46,6 +51,7 @@ async function postCommentReply(content: string) {
     :item="itemComment"
     @update-comment="hanldeEmitUpdateComment"
     @change-status-reply="changeStatusReply"
+    @delete="deleteComment"
   />
 
   <!-- Write comment reply -->
@@ -53,7 +59,9 @@ async function postCommentReply(content: string) {
   <div class="flex flex-col pl-12 mb-6">
     <template v-if="isReplying">
       <span class="my-4 text-sm">What do you want to reply the above comment?</span>
-      <Comment @comment="postCommentReply" />
+      <Comment
+        @comment="postCommentReply"
+      />
     </template>
 
     <!-- List comment reply -->

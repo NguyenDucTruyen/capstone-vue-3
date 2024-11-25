@@ -3,7 +3,9 @@
 import type { CommentData } from '@/types/comment'
 import { uploadImage } from '@/api/upload'
 import { toast } from '@/components/ui/toast'
+import { useConfirmStore } from '@/stores/confirm'
 import { useUserStore } from '@/stores/user'
+import { MoreHorizontal } from 'lucide-vue-next'
 import BlotFormatter from 'quill-blot-formatter'
 import ImageUploader from 'quill-image-uploader'
 
@@ -11,6 +13,7 @@ interface Emit {
   (event: 'updateComment', data: CommentData): void
   (event: 'comment', title: string): void
   (event: 'changeStatusReply', status: boolean): void
+  (event: 'delete', id: string): void
 }
 
 interface Props {
@@ -21,6 +24,7 @@ const props = defineProps<Props>()
 const emit = defineEmits<Emit>()
 
 const userStore = useUserStore()
+const confirmStore = useConfirmStore()
 const edit = defineModel('edit')
 
 const itemComment = ref(props.item)
@@ -110,6 +114,15 @@ function emitReply() {
   isReply.value = !isReply.value
   emit('changeStatusReply', isReply.value)
 }
+async function confirmDeleteComment(id: string) {
+  const confirm = await confirmStore.showConfirmDialog({
+    title: 'Confirm delete',
+    message: 'Are you sure you want to delete this comment?',
+  })
+  if (confirm) {
+    emit('delete', id)
+  }
+}
 </script>
 
 <template>
@@ -120,7 +133,7 @@ function emitReply() {
       alt=""
       class="comment-creator"
     >
-    <div v-if="!edit && itemComment" class="preview-comment">
+    <div v-if="!edit && itemComment" class="preview-comment relative">
       <template v-if="itemComment">
         <div class="comment-author">
           <span class="comment-author-name max-w-60 truncate">{{ itemComment.userId.email }}</span>
@@ -128,26 +141,40 @@ function emitReply() {
         </div>
         <div class="preview-comment-body ql-snow">
           <div class="content ql-editor" v-html="itemComment.content" />
-          <div v-if="true" class="preview-comment-body-action">
-            <!-- Check authorization here -->
-            <template
-              v-if="itemComment.reply"
-            >
-              <Button
-                v-if="itemComment.userId._id === userStore.user?._id
-                  || userStore.user?.roleName === 'ADMIN'"
-                variant="link"
-                type="info"
-                class="file-action relative" @click="switchToEditMode"
-              >
-                Edit
-              </Button>
-              <Button variant="link" type="info" class="file-action relative" @click="emitReply">
-                {{ isReply ? 'Cancel reply' : 'Write a reply' }}
-              </Button>
-            </template>
+          <div v-if="itemComment.reply" class="preview-comment-body-action">
+            <Button variant="link" type="info" class="file-action relative" @click="emitReply">
+              {{ isReply ? 'Cancel reply' : 'Write a reply' }}
+            </Button>
           </div>
         </div>
+        <DropdownMenu
+          v-if="
+            itemComment.reply
+              && (itemComment.userId._id === userStore.user?._id
+                || userStore.user?.roleName === 'ADMIN')"
+        >
+          <DropdownMenuTrigger
+            class="cursor-pointer"
+            as-child
+          >
+            <Button variant="outline" class="w-8 h-8 p-0 absolute right-0 top-0">
+              <span class="sr-only">Open menu</span>
+              <MoreHorizontal class="w-4 h-4" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent class="">
+            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem
+              @click="switchToEditMode"
+            >
+              Edit comment
+            </DropdownMenuItem>
+            <DropdownMenuItem class="cursor-pointer" @click="confirmDeleteComment(itemComment._id)">
+              Delete comment
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </template>
       <div v-else class="preview-comment-placeholder" @click="switchToEditMode()">
         Viết bình luận...

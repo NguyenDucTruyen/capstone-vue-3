@@ -11,4 +11,5 @@ useThemeStore()
     </ErrorBoundary>
   </router-view>
   <Toaster />
+  <DialogConfirm />
 </template>
