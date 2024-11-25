@@ -30,20 +30,24 @@ function handleChange(value) {
       </Button>
     </DropdownMenuTrigger>
     <DropdownMenuContent class="w-52 rounded-lg" side="bottom" align="end" :side-offset="4">
-      <DropdownMenuItem>
+      <DropdownMenuItem class="cursor-pointer">
         <div class="flex justify-between item-centers w-full items-center">
           <span>Color theme</span><ColorSelect custom-class="max-w-24" />
         </div>
       </DropdownMenuItem>
-      <DropdownMenuItem>
+      <DropdownMenuItem class="cursor-pointer">
         <div class="flex justify-between item-centers w-full items-center">
           <span>Dark mode</span><Switch :checked="themeStore.theme === 'dark'" @update:checked="handleChange" />
         </div>
       </DropdownMenuItem>
       <DropdownMenuSeparator />
-      <DropdownMenuItem> Profile </DropdownMenuItem>
+      <DropdownMenuItem class="cursor-pointer">
+        <div>
+          Profile
+        </div>
+      </DropdownMenuItem>
       <DropdownMenuSeparator />
-      <DropdownMenuItem @click="authStore.logout()">
+      <DropdownMenuItem class="cursor-pointer" @click="authStore.logout()">
         Log out
       </DropdownMenuItem>
     </DropdownMenuContent>

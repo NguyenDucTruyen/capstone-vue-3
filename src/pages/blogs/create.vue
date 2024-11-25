@@ -110,7 +110,7 @@ function updateContent(newContent: string) {
 </script>
 
 <template>
-  <form class="p-8 rounded-md" @submit.prevent="onSubmit">
+  <form class="p-8 max-w-4xl flex-1 rounded-md" @submit.prevent="onSubmit">
     <div class="flex flex-col items-center mb-8">
       <h1 class="text-2xl font-semibold mb-2 flex items-center gap-2">
         <BookText />  Create Blog

@@ -11,7 +11,7 @@ const categoryStore = useCategoryStore()
         Categories
       </h2>
       <Separator class="w-full bg-muted-foreground" />
-      <ScrollArea class="max-h-[420px] w-full overflow-auto custom-scroll mb-5 pr-4">
+      <ScrollArea class="w-full overflow-auto custom-scroll mb-5 pr-4">
         <template v-if="categoryStore.categories">
           <template
             v-for="item in categoryStore.categories"
@@ -23,7 +23,7 @@ const categoryStore = useCategoryStore()
             >
               <Icon
                 name="IconTag"
-                class="object-contain h-8 w-8 flex justify-center items-center"
+                class="object-contain text-primary h-8 w-8 flex justify-center items-center"
               />
               <div class="flex flex-col w-[calc(100%-2.5rem)] items-start gap-0.5">
                 <span class="text-foreground font-medium text-sm leading-4">{{ item.name }}</span>

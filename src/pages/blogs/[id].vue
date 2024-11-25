@@ -1,12 +1,3 @@
-<route>
-    {
-        meta: {
-        layout: "empty",
-        title: "Blog",
-        }
-    }
-</route>
-
 <script setup lang="ts">
 import type { BlogData, Reaction } from '@/types/blog'
 import type { CommentData, CommentReply, RequestBodyComment } from '@/types/comment'
