@@ -170,6 +170,14 @@ async function confirmDeletePhoto() {
       </div>
       <div class="col-span-2 grid gap-2 py-4">
         <InputValidator
+          id="email"
+          :model-value="user?.email"
+          type="text"
+          label="Email"
+          :disabled="true"
+          name="email"
+        />
+        <InputValidator
           id="firstName"
           :model-value="user?.firstName"
           type="text"
@@ -192,6 +200,7 @@ async function confirmDeletePhoto() {
           label="Gender"
           :model-value="genderInitial"
           name="gender"
+          :style="{ height: '5rem' }"
         >
           <template v-if="isAuthor" #default="{ componentField }">
             <FormControl>

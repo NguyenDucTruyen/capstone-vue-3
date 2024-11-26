@@ -45,6 +45,17 @@ export const resetPasswordValidator = z
     path: ['confirmPassword'],
   })
 
+export const changePasswordValidator = z
+  .object({
+    password: passwordSchema,
+    newPassword: passwordSchema,
+    confirmNewPassword: passwordSchema,
+  })
+  .refine(data => data.newPassword === data.confirmNewPassword, {
+    message: 'Password confirmation does not match',
+    path: ['confirmNewPassword'],
+  })
+
 export const updateProfileValidator = z.object({
   firstName: z.string().min(3).max(32),
   lastName: z.string().min(2).max(32),

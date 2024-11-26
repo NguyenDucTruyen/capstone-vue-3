@@ -16,39 +16,37 @@ const route = useRoute()
 const router = useRouter()
 const userStore = useUserStore()
 const user = ref<UserData | null>(null)
-try {
-  user.value = await userStore.getUserData(route.params.id as string)
-}
-catch (error) {
-  console.error(error)
-  toast({
-    title: 'Error',
-    description: 'User not found',
-    variant: 'destructive',
-  })
-  router.push('/home')
-}
 const isLoading = ref(true)
 const blogs = ref<ResponseBlogData | null>()
 const query = ref({
   page: 1,
-  limit: 5,
-  title: '',
+  limit: 1000,
 })
 if (!route.query.page) {
   router.push({ query: { page: 1 } })
   query.value.page = 1
 }
+onMounted(async () => {
+  try {
+    user.value = await userStore.getUserData(route.params.id as string)
+    isLoading.value = true
+    blogs.value = await userStore.getBlogsByUser(user.value?._id || '', { params: query.value }) as ResponseBlogData
+    isLoading.value = false
+  }
+  catch (error) {
+    console.error(error)
+    toast({
+      title: 'Error',
+      description: 'User not found',
+      variant: 'destructive',
+    })
+    router.push('/home')
+  }
+})
 
-watch(route, async (newVal) => {
-  const container = document.querySelector('.container-default')
-  if (container)
-    container.scrollTo({ top: 0, behavior: 'smooth' })
-  query.value.page = Number(newVal.query.page)
-  isLoading.value = true
-  blogs.value = await userStore.getBlogsByUser(user.value?._id || '', { params: query.value }) as ResponseBlogData
-  isLoading.value = false
-}, { immediate: true })
+const paginateBlogs = computed(() => {
+  return blogs.value?.docs.slice((route.query.page - 1) * 5, route.query.page * 5)
+})
 </script>
 
 <template>
@@ -63,10 +61,10 @@ watch(route, async (newVal) => {
   <div v-show="isLoading && !blogs" class="flex w-full p-8 justify-center items-center">
     <Icon name="IconLoading" />
   </div>
-  <div v-if="blogs?.docs" class="flex flex-col p-6 bg-muted rounded-lg flex-1 pt-12 relative">
-    <template v-if="blogs?.docs.length">
+  <div v-if="paginateBlogs && $route.query.page" class="flex flex-col p-6 bg-muted rounded-lg flex-1 pt-12 relative">
+    <template v-if="paginateBlogs.length">
       <div
-        v-for="blog in blogs?.docs"
+        v-for="blog in paginateBlogs"
         :key="blog._id"
         class="blog w-full"
       >
@@ -78,8 +76,8 @@ watch(route, async (newVal) => {
       </div>
       <PaginationTable
         :total="blogs?.totalDocs"
-        :current-page="blogs?.page || 1"
-        :items-per-page="query.limit"
+        :current-page="Number($route.query.page || 1)"
+        :items-per-page="5"
       />
     </template>
     <p v-else class="text-lg text-center text-muted-foreground">

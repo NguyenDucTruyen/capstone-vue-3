@@ -15,7 +15,7 @@
           <div class="flex col-span-1 lg:col-span-2">
             <div class="flex flex-col gap-4 h-full rounded-xl max-w-4xl flex-1">
               <Suspense>
-                <router-view />
+                <router-view/>
                 <template #fallback>
                   <div class="flex w-full p-8 justify-center items-center">
                     <Icon name="IconLoading" />
