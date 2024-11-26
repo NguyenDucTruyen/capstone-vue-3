@@ -1,5 +1,4 @@
 import type { NavigationGuardNext, RouteLocationNormalized } from 'vue-router'
-import { fetchUserData } from '@/api/user'
 import { useAuthStore } from '@/stores/auth'
 import { useUserStore } from '@/stores/user'
 
@@ -19,7 +18,7 @@ export async function middlewareAuth(to: RouteLocationNormalized, from: RouteLoc
 
   if (!userStore.isAuthenticated) {
     try {
-      await userStore.getUserData()
+      await userStore.getMe()
     }
     catch (error) {
       console.error('Error fetching user data:', error)

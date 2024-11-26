@@ -180,21 +180,23 @@ function updateContent(newContent: string) {
       Expand on what you put in the title. Minimum 20 characters.
     </p>
     <ContentEditor ref="refQuillContent" @update-content="updateContent" />
-    <InputValidator
-      :model-value="content"
-      label=""
-      name="content"
-      class-custom="h-0 mt-8"
-    >
-      <template #default="{ componentField }">
-        <Input
-          id="content"
-          v-bind="componentField"
-          class="pr-9 hidden"
-          autocomplete="off"
-        />
-      </template>
-    </InputValidator>
+    <div class="mt-8">
+      <InputValidator
+        :model-value="content"
+        label=""
+        name="content"
+        :style="{ height: '0' }"
+      >
+        <template #default="{ componentField }">
+          <Input
+            id="content"
+            v-bind="componentField"
+            class="pr-9 hidden"
+            autocomplete="off"
+          />
+        </template>
+      </InputValidator>
+    </div>
     <Button variant="secondary">
       <RouterLink to="/home">
         Cancel

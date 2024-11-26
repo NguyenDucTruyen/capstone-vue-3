@@ -38,7 +38,7 @@ const component = computed(() => {
     class="flex py-2 lg:pl-4 gap-4 w-full items-center cursor-pointer text-foreground max-lg:flex-col"
   >
     <Icon :name="props.icon" class="w-6 h-6" />
-    <span class="font-bold" :class="props.textStyle">{{ props.title }}</span>
+    <span class="font-bold hidden lg:flex" :class="props.textStyle">{{ props.title }}</span>
   </component>
 </template>
 

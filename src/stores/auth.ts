@@ -13,7 +13,7 @@ export const useAuthStore = defineStore('auth', () => {
   async function login(credentials: LoginData) {
     const data = await apiLogin(credentials)
     localStorage.setItem('accesstoken', data.token)
-    await userStore.getUserData()
+    await userStore.getMe()
     router.push(returnUrl.value || '/home')
     returnUrl.value = ''
   }

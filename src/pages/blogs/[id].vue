@@ -71,8 +71,7 @@ async function deleteComment(id: string) {
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-2 mb-4">
         <div class="meta-item">
           <label>Author:</label>
-          <!-- <RouterLink :to="{ name: 'profile', params: { id: blog.userId._id } }"> -->
-          <RouterLink to="/home">
+          <RouterLink :to="{ name: 'profile-id', params: { id: blog.userId._id } }">
             {{ blog.userId.email }}
           </RouterLink>
         </div>

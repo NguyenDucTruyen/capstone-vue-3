@@ -41,7 +41,6 @@ async function postCommentReply(content: string) {
   })
 }
 async function deleteComment(id: string) {
-  console.log(id)
   emit('delete', id)
 }
 </script>

@@ -41,11 +41,11 @@ function handleChange(value) {
         </div>
       </DropdownMenuItem>
       <DropdownMenuSeparator />
-      <DropdownMenuItem class="cursor-pointer">
-        <div>
+      <RouterLink :to="`/profile/${userStore.user._id}`">
+        <DropdownMenuItem class="cursor-pointer">
           Profile
-        </div>
-      </DropdownMenuItem>
+        </DropdownMenuItem>
+      </RouterLink>
       <DropdownMenuSeparator />
       <DropdownMenuItem class="cursor-pointer" @click="authStore.logout()">
         Log out

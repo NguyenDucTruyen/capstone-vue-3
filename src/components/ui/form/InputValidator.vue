@@ -8,14 +8,15 @@ interface InputProps {
   placeholder?: string
   label?: string
   name?: string
-  classCustom?: string
+  style?: any
+  disabled?: boolean
 }
 const props = withDefaults(defineProps<InputProps>(), {
   id: 'text',
   type: 'text',
   label: '',
   name: 'text',
-  classCustom: '',
+  disabled: false,
 })
 const isShowPassword = ref(false)
 function toggleShowIcon() {
@@ -28,7 +29,7 @@ const typeInputComputed = computed(() => {
 
 <template>
   <FormField v-slot="{ componentField }" :model-value="props.modelValue" :name="props.name" :validate-on-blur="true">
-    <div class="space-y-2 h-24 relative" :class="props.classCustom">
+    <div class="space-y-2 h-24 relative" :style="props.style">
       <Label v-if="props.label" :for="props.id">{{ props.label }}</Label>
       <FormItem>
         <FormControl>
@@ -37,6 +38,7 @@ const typeInputComputed = computed(() => {
               :id="props.id"
               :type="typeInputComputed"
               :placeholder="props.placeholder"
+              :disabled="props.disabled"
               v-bind="componentField"
               class="pr-9"
               autocomplete="off"
