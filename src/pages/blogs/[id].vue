@@ -60,6 +60,12 @@ async function deleteComment(id: string) {
   const index = comments.value.findIndex(comment => comment._id === id)
   comments.value.splice(index, 1)
 }
+async function apiReactionsBlog(reaction: 'like' | 'dislike') {
+  const response = await blogStore.reactionBlog(blog.value?._id as string, reaction)
+  if (blog.value) {
+    blog.value.reaction = response.reaction
+  }
+}
 </script>
 
 <template>
@@ -98,11 +104,19 @@ async function deleteComment(id: string) {
     <Separator />
     <div class="mb-4">
       <div class="flex my-4 h-8 items-center">
-        <Button :variant="userReaction === 'like' ? '' : 'outline'" class="mr-2">
+        <Button
+          :variant="userReaction === 'like' ? '' : 'outline'"
+          class="mr-2"
+          @click="apiReactionsBlog('like')"
+        >
           <Icon name="IconThumbsUp" />
           <span class="ml-2">Like ({{ countLike }})</span>
         </Button>
-        <Button :variant="userReaction === 'dislike' ? '' : 'outline'" class="mr-2">
+        <Button
+          :variant="userReaction === 'dislike' ? '' : 'outline'"
+          class="mr-2"
+          @click="apiReactionsBlog('dislike')"
+        >
           <Icon name="IconThumbsDown" />
           <span class="ml-2">Dislike ({{ countDislike }})</span>
         </Button>

@@ -54,3 +54,8 @@ export const statusEnum = {
   REJECTED: 'REJECTED',
   APPROVED: 'APPROVED',
 }
+
+export const reactionEnum = {
+  LIKE: 'like',
+  DISLIKE: 'dislike',
+}

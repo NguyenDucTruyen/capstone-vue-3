@@ -139,7 +139,7 @@ async function confirmDeleteComment(id: string) {
           <span class="comment-author-name max-w-60 truncate">{{ itemComment.userId.email }}</span>
           <span class="comment-author-time">{{ getDate(itemComment.createdAt) }}</span>
         </div>
-        <div class="preview-comment-body ql-snow">
+        <div class="preview-comment-body ql-snow w-[calc(100%-3rem)]">
           <div class="content ql-editor" v-html="itemComment.content" />
           <div v-if="itemComment.reply" class="preview-comment-body-action">
             <Button variant="link" type="info" class="file-action relative" @click="emitReply">
@@ -157,7 +157,7 @@ async function confirmDeleteComment(id: string) {
             class="cursor-pointer"
             as-child
           >
-            <Button variant="outline" class="w-8 h-8 p-0 absolute right-0 top-0">
+            <Button variant="outline" class="w-8 h-8 p-0 absolute right-0 top-5">
               <span class="sr-only">Open menu</span>
               <MoreHorizontal class="w-4 h-4" />
             </Button>
