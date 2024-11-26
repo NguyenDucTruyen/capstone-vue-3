@@ -49,16 +49,6 @@ watch(route, async (newVal) => {
   blogs.value = await userStore.getBlogsByUser(user.value?._id || '', { params: query.value }) as ResponseBlogData
   isLoading.value = false
 }, { immediate: true })
-function handleUpdateQuery() {
-  if (!query.value.title)
-    return
-  router.push({ query: { page: 1, title: query.value.title } })
-}
-function handleDeleteQuery() {
-  if (!query.value.title) {
-    router.push({ query: { page: 1 } })
-  }
-}
 </script>
 
 <template>
