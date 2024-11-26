@@ -12,7 +12,7 @@ function handleChange(value) {
 }
 const nameDisplay = computed(() => {
   if (userStore.user?.firstName || userStore.user?.lastName) {
-    return `${userStore.user?.firstName} ${userStore.user?.lastName}`
+    return `${userStore.user?.firstName ?? ''} ${userStore.user?.lastName ?? ''}`
   }
   return userStore.user?.email
 })

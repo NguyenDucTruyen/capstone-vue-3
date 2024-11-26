@@ -1,5 +1,5 @@
-import type { UserData } from './auth'
 import type { Category } from './category'
+import type { UserData } from './user'
 
 export interface RequestCreateBlog {
   category: string
@@ -39,4 +39,18 @@ export interface ResponseBlogData {
   prevPage: number | null
   totalDocs: number
   totalPages: number
+}
+
+export const isActiveEnum = {
+  BANNER: 'banner',
+  ACTIVE: 'active',
+  BLOCKPOSTING: 'blockposting',
+  DELETE: 'delete',
+  BLOCKCOMMENT: 'blockcomment',
+}
+
+export const statusEnum = {
+  PENDING: 'PENDING',
+  REJECTED: 'REJECTED',
+  APPROVED: 'APPROVED',
 }

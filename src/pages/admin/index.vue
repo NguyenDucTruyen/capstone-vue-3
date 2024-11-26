@@ -76,7 +76,7 @@ async function confirmDeleteUser(id: string) {
     <h2 class="text-2xl font-semibold mb-4 ">
       <!-- User Management -->
     </h2>
-    <div v-if="data?.docs" class=" rounded-lg overflow-hidden shadow-md">
+    <div v-if="data?.docs" class="rounded-lg overflow-hidden shadow-md w-full">
       <div class="grid lg:grid-cols-7 grid-cols-5 gap-4 p-4 border-b font-semibold">
         <div class="lg:col-span-2">
           Name
@@ -101,10 +101,32 @@ async function confirmDeleteUser(id: string) {
             alt=""
             class="w-10 h-10 rounded-full object-cover"
           >
-          <span class="truncate">{{ (user.firstName ?? '') + (user.lastName ?? '') }}</span>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger>
+                <RouterLink :to="`/profile/${user._id}`">
+                  <span class="truncate">{{ (user.firstName ?? '') + (user.lastName ?? '') }}</span>
+                </RouterLink>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>View detail blog</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
         </div>
         <div class="lg:col-span-2 truncate">
-          {{ user.email }}
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger>
+                <RouterLink :to="`/profile/${user._id}`">
+                  {{ user.email }}
+                </RouterLink>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>View detail blog</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
         </div>
         <div>{{ user.gender === true ? 'Male' : user.gender === false ? 'Female' : '' }}</div>
         <div>{{ getDate(user.dayOfBirth) }}</div>
@@ -131,7 +153,7 @@ async function confirmDeleteUser(id: string) {
             <DropdownMenuContent class="">
               <DropdownMenuLabel>Actions</DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem @click="editUser(user)">
+              <DropdownMenuItem class="cursor-pointer" @click="editUser(user)">
                 Edit User
               </DropdownMenuItem>
               <DropdownMenuItem class="cursor-pointer" @click="confirmDeleteUser(user._id)">
