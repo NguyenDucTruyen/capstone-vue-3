@@ -94,7 +94,7 @@ async function confirmDeleteUser(id: string) {
         class="grid lg:grid-cols-7 grid-cols-5 gap-4 p-4 items-center hover:bg-secondary"
       >
         <!-- Avatar and Name -->
-        <div class="flex lg:col-span-2 items-center gap-4">
+        <div class="flex lg:col-span-2 items-center gap-4 truncate">
           <img
             v-if="user"
             v-lazy="user.profileImage ?? 'https://static.vecteezy.com/system/resources/thumbnails/024/983/914/small_2x/simple-user-default-icon-free-png.png'"
@@ -105,7 +105,7 @@ async function confirmDeleteUser(id: string) {
             <Tooltip>
               <TooltipTrigger>
                 <RouterLink :to="`/profile/${user._id}`">
-                  <span class="truncate">{{ (user.firstName ?? '') + (user.lastName ?? '') }}</span>
+                  {{ (user.firstName ?? '') + (user.lastName ?? '') }}
                 </RouterLink>
               </TooltipTrigger>
               <TooltipContent>

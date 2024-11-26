@@ -43,7 +43,7 @@ function cancel() {
               <div class="w-full flex flex-col text-foreground items-center">
                 <select
                   v-model="selectedStatus"
-                  class="p-2 rounded-sm bg-background text-foreground cursor-pointer border"
+                  class="p-2 rounded-sm bg-background text-foreground cursor-pointer border border-primary"
                 >
                   <option value="ACTIVE">
                     Active

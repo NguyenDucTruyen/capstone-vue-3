@@ -13,14 +13,14 @@ const themeStore = useThemeStore()
 function setColor(color: ColorsType) {
   themeStore.setColor(color)
 }
-const colors = ref<ColorsType[]>(['rose', 'blue', 'green', 'orange'],
+const colors = ref<ColorsType[]>(['pink', 'blue', 'green', 'orange'],
 )
 </script>
 
 <template>
   <Select
     v-model="themeStore.color"
-    @change="setColor"
+    @update:model-value="setColor"
   >
     <SelectTrigger class="w-full" :class="props.customClass">
       <SelectValue placeholder="Select a color" />

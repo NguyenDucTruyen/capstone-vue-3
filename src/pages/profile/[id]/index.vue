@@ -13,6 +13,7 @@ import { uploadImage } from '@/api/upload'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import { toast } from '@/components/ui/toast'
 import { useConfirmStore } from '@/stores/confirm'
+import { useThemeStore } from '@/stores/theme'
 import { useUserStore } from '@/stores/user'
 import { updateProfileValidator } from '@/utils/validation'
 import { toTypedSchema } from '@vee-validate/zod'
@@ -22,7 +23,7 @@ import { BookText, CloudUpload, Trash2 } from 'lucide-vue-next'
 import { ErrorMessage, Field, useForm } from 'vee-validate'
 
 const router = useRouter()
-
+const themeStore = useThemeStore()
 const userStore = useUserStore()
 const route = useRoute()
 const confirmStore = useConfirmStore()
@@ -234,14 +235,16 @@ async function confirmDeletePhoto() {
         <div class="flex flex-col justify-center gap-4">
           <Label>Date of birth</Label>
           <input
-            v-model="dateFormat" type="text"
+            v-model="dateFormat"
+            type="text"
+            placeholder="Select date"
             class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 pr-9"
             disabled
           >
           <VDatePicker
             v-if="isAuthor"
             v-model="date"
-            color="pink"
+            :color="themeStore.color"
             locale="en"
           >
             <template #default="{ togglePopover }">

@@ -1,9 +1,9 @@
-import type { ColorsType, ThemeType } from '@/types/theme-type'
+import type { ColorsType, ThemeType } from '@/types'
 import { defineStore } from 'pinia'
 
 export const useThemeStore = defineStore('themeStore', () => {
   const themeLocal = localStorage.getItem('theme') || 'light'
-  const colorsLocal = localStorage.getItem('color') || 'rose'
+  const colorsLocal = localStorage.getItem('color') || 'pink'
 
   const theme = ref<ThemeType>(themeLocal as ThemeType)
   const color = ref<ColorsType>(colorsLocal as ColorsType)

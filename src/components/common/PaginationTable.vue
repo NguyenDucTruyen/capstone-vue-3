@@ -40,7 +40,7 @@ function handlePageChange(newPage: number) {
     :default-page="props.currentPage"
     @update:page="handlePageChange"
   >
-    <PaginationList v-slot="{ items }" class="flex items-center gap-1 justify-center">
+    <PaginationList v-slot="{ items }" class="flex items-center gap-1 justify-center p-4">
       <PaginationFirst />
       <PaginationPrev />
 
