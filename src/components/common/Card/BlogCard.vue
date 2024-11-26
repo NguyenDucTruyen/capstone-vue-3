@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import type { UserData } from '@/types/auth'
-import type { BlogData, Reaction } from '@/types/blog'
+import type { BlogData, Reaction, UserData } from '@/types'
 
 const props = defineProps<{
   value: BlogData

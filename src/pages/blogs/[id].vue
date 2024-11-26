@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { BlogData, Reaction } from '@/types/blog'
-import type { CommentData, CommentReply, RequestBodyComment } from '@/types/comment'
+import type { BlogData, CommentData, CommentReply, Reaction, RequestBodyComment } from '@/types'
+
 import { toast } from '@/components/ui/toast'
 import { useBlogStore } from '@/stores/blog'
 import { useCommentStore } from '@/stores/comment'

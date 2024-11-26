@@ -45,6 +45,9 @@ onMounted(async () => {
 })
 
 const paginateBlogs = computed(() => {
+  const container = document.querySelector('.container-default')
+  if (container)
+    container.scrollTo({ top: 0, behavior: 'smooth' })
   return blogs.value?.docs.slice((route.query.page - 1) * 5, route.query.page * 5)
 })
 </script>

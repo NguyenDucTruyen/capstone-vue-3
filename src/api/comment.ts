@@ -1,4 +1,4 @@
-import type { CommentData, CommentReply, RequestBodyComment } from '@/types/comment'
+import type { CommentData, CommentReply, RequestBodyComment } from '@/types'
 import { $delete, $get, $patch, $post } from './axios'
 
 export async function apitGetCommentByBlogId(id: string): Promise<CommentData[]> {

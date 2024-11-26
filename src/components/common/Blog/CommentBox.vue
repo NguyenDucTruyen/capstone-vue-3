@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { CommentData, CommentReply } from '@/types/comment'
+import type { CommentData, CommentReply } from '@/types'
 import { toast } from '@/components/ui/toast'
 import { useCommentStore } from '@/stores/comment'
 import { useUserStore } from '@/stores/user'

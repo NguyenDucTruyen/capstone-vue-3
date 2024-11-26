@@ -1,4 +1,4 @@
-import type { BlogData, RequestCreateBlog, ResponseBlogData } from '@/types/blog'
+import type { BlogData, RequestCreateBlog, ResponseBlogData } from '@/types'
 import { apiCreateBlog, apiGetBlogById, apiGetBlogs, apiGetNewBlogs, apiGetPopularBlogs } from '@/api/blog'
 import { defineStore } from 'pinia'
 

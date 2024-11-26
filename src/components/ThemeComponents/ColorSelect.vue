@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { ColorsType } from '@/types/'
+import type { ColorsType } from '@/types'
 import { useThemeStore } from '@/stores/theme'
 import { ref } from 'vue'
 

@@ -1,4 +1,4 @@
-import type { CommentData, CommentReply, RequestBodyComment } from '@/types/comment'
+import type { CommentData, CommentReply, RequestBodyComment } from '@/types'
 
 import { apiCreateComment, apiCreateReplyComment, apiDeleteCommentById, apitGetCommentByBlogId, apiUpdateCommentById } from '@/api/comment'
 import { defineStore } from 'pinia'

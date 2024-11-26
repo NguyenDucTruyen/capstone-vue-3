@@ -1,6 +1,6 @@
 <!-- eslint-disable prefer-promise-reject-errors -->
 <script setup lang="ts">
-import type { CommentData } from '@/types/comment'
+import type { CommentData } from '@/types'
 import { uploadImage } from '@/api/upload'
 import { toast } from '@/components/ui/toast'
 import { useConfirmStore } from '@/stores/confirm'

@@ -1,4 +1,4 @@
-import type { BlogData, RequestCreateBlog, ResponseBlogData } from '@/types/blog'
+import type { BlogData, RequestCreateBlog, ResponseBlogData } from '@/types'
 import { $get, $post } from './axios'
 
 export async function apiGetBlogs(config: any): Promise<ResponseBlogData> {
