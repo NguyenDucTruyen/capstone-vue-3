@@ -12,7 +12,6 @@ import type { ResponseListUser, UserData } from '@/types'
 import { useAdminStore } from '@/stores/admin'
 import { useConfirmStore } from '@/stores/confirm'
 import { MoreHorizontal } from 'lucide-vue-next'
-import { ref } from 'vue'
 
 const adminStore = useAdminStore()
 const confirmStore = useConfirmStore()
